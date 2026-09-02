@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Mr. White — Dossier du Jeu</title>
+<title>ISHAK's UNDERCOVER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -189,6 +189,40 @@
     color:var(--paper);
   }
 
+  .theme-select-wrap{
+    position:relative;
+    width:100%;
+  }
+  .theme-select{
+    width:100%;
+    padding:12px 14px;
+    background:var(--ink);
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--paper);
+    font-family:'Special Elite', monospace;
+    font-size:13px;
+    letter-spacing:0.06em;
+    cursor:pointer;
+    outline:none;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b9974a' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    background-size:10px;
+    transition:border-color .15s;
+  }
+  .theme-select:focus, .theme-select:hover{
+    border-color:var(--gold);
+  }
+  .theme-select option{
+    background:var(--ink-2);
+    color:var(--paper);
+    font-family:'Courier Prime', monospace;
+    padding:8px;
+  }
+
   /* Pass screen */
   .pass-card{
     text-align:center;
@@ -283,9 +317,11 @@
     word-break:break-word;
   }
   .face-back .word.ar{
-    font-family: 'Courier Prime', monospace;
-    font-size:44px;
+    font-family: 'Segoe UI', Tahoma, 'Arial', sans-serif;
+    font-size:40px;
+    font-weight:700;
     direction:rtl;
+    margin-bottom:4px;
   }
   .face-back .translit{
     margin-top:12px;
@@ -333,6 +369,406 @@
 
   .hidden{display:none !important;}
 
+  /* Top Bar */
+  .top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    margin-bottom:14px;
+  }
+  .top-btn{
+    background:rgba(21,24,28,0.7);
+    border:1px solid var(--line);
+    color:var(--paper-dim);
+    padding:6px 12px;
+    border-radius:2px;
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition:border-color .15s, color .15s;
+  }
+  .top-btn:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .top-btn.active{
+    color:var(--gold);
+    border-color:var(--gold);
+  }
+
+  /* Modals */
+  .modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(10,12,15,0.85);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .modal-sheet{
+    background:var(--ink-2);
+    border:1px solid var(--gold);
+    max-width:480px;
+    width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    padding:24px;
+    position:relative;
+    box-shadow:0 25px 60px rgba(0,0,0,0.8);
+  }
+  .modal-sheet::before{
+    content:"CONFIDENTIEL";
+    position:absolute;
+    top:12px;
+    right:16px;
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:0.25em;
+    color:var(--redact);
+    border:1px solid var(--redact);
+    padding:2px 6px;
+    transform:rotate(4deg);
+    opacity:0.8;
+  }
+  .modal-sheet h3{
+    font-family:'Special Elite', monospace;
+    font-size:22px;
+    margin:0 0 16px;
+    color:var(--paper);
+  }
+  .rule-block{
+    margin-bottom:16px;
+    border-left:2px solid var(--teal);
+    padding-left:12px;
+  }
+  .rule-block h4{
+    font-family:'Special Elite', monospace;
+    font-size:13.5px;
+    margin:0 0 4px;
+    color:var(--gold);
+  }
+  .rule-block p{
+    font-size:12px;
+    margin:0;
+    color:var(--paper-dim);
+    line-height:1.5;
+  }
+
+  /* Custom Names Inputs */
+  .custom-names-box{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .name-input-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--ink);
+    border:1px solid var(--line);
+    padding:6px 8px;
+    border-radius:2px;
+  }
+  .name-input-row:focus-within{
+    border-color:var(--gold);
+  }
+  .name-input-label{
+    font-family:'Special Elite', monospace;
+    font-size:10.5px;
+    color:var(--paper-dim);
+    white-space:nowrap;
+  }
+  .name-input{
+    width:100%;
+    background:transparent;
+    border:none;
+    color:var(--paper);
+    font-family:'Courier Prime', monospace;
+    font-size:12px;
+    outline:none;
+  }
+
+  /* Progress dots */
+  .progress-dots{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .p-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--line);
+    transition:background .2s, transform .2s;
+  }
+  .p-dot.done{
+    background:var(--gold);
+  }
+  .p-dot.current{
+    background:var(--redact);
+    transform:scale(1.3);
+  }
+
+  /* First Speaker Box */
+  .speaker-box{
+    background:linear-gradient(135deg, rgba(185,151,74,0.12), rgba(51,80,90,0.15));
+    border:1px dashed var(--gold);
+    padding:14px 16px;
+    border-radius:2px;
+    text-align:center;
+    margin:14px 0 18px;
+  }
+  .speaker-kicker{
+    font-family:'Special Elite', monospace;
+    font-size:10.5px;
+    letter-spacing:0.25em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .speaker-name{
+    font-family:'Special Elite', monospace;
+    font-size:22px;
+    color:var(--paper);
+  }
+  .speaker-desc{
+    font-size:11px;
+    color:var(--paper-dim);
+    margin-top:6px;
+    opacity:0.85;
+    line-height:1.4;
+  }
+
+  /* Suspects Grid Board */
+  .suspects-board-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0 10px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .suspects-board-title{
+    font-family:'Special Elite', monospace;
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .suspect-counts{
+    font-size:11px;
+    color:var(--paper-dim);
+    display:flex;
+    gap:10px;
+  }
+  .suspect-counts b{
+    color:var(--paper);
+  }
+  .suspects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .suspect-card{
+    background:var(--ink);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:12px 10px;
+    text-align:center;
+    cursor:pointer;
+    position:relative;
+    transition:border-color .15s, transform .12s, background .15s;
+    user-select:none;
+  }
+  .suspect-card:hover{
+    border-color:var(--gold);
+    transform:translateY(-2px);
+  }
+  .suspect-avatar{
+    width:36px;
+    height:36px;
+    margin:0 auto 8px;
+    border-radius:50%;
+    background:rgba(233,226,207,0.06);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+  }
+  .suspect-no{
+    font-family:'Special Elite', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+  }
+  .suspect-name{
+    font-family:'Special Elite', monospace;
+    font-size:13.5px;
+    color:var(--paper);
+    margin:3px 0 6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .suspect-status{
+    display:inline-block;
+    font-size:9.5px;
+    padding:2px 6px;
+    border-radius:1px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    background:rgba(51,80,90,0.3);
+    color:var(--paper-dim);
+    border:1px solid rgba(51,80,90,0.6);
+  }
+  .suspect-card.eliminated{
+    opacity:0.6;
+    background:rgba(21,24,28,0.4);
+    border-color:rgba(165,35,24,0.35);
+  }
+  .suspect-card.eliminated:hover{
+    transform:none;
+  }
+  .suspect-card.eliminated .suspect-name{
+    text-decoration:line-through;
+    color:var(--paper-dim);
+  }
+  .suspect-card.eliminated .suspect-status{
+    background:rgba(165,35,24,0.25);
+    color:var(--redact);
+    border-color:var(--redact);
+  }
+  .suspect-card .role-reveal-badge{
+    font-family:'Special Elite', monospace;
+    font-size:10.5px;
+    color:var(--gold);
+    margin-top:4px;
+    font-weight:bold;
+  }
+
+  /* Victory Banner */
+  .victory-banner{
+    background:var(--ink);
+    border:2px solid var(--gold);
+    padding:20px 16px;
+    text-align:center;
+    margin-bottom:20px;
+    position:relative;
+    box-shadow:0 0 25px rgba(185,151,74,0.2);
+  }
+  .victory-banner.imposters{
+    border-color:var(--redact);
+    box-shadow:0 0 25px rgba(165,35,24,0.25);
+  }
+  .victory-stamp{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:0.3em;
+    display:inline-block;
+    padding:4px 10px;
+    border:1px solid currentColor;
+    margin-bottom:10px;
+  }
+  .victory-title{
+    font-family:'Special Elite', monospace;
+    font-size:22px;
+    margin:0 0 8px;
+    color:var(--paper);
+  }
+  .victory-sub{
+    font-size:12px;
+    color:var(--paper-dim);
+    line-height:1.5;
+  }
+
+  /* Timer Component */
+  .timer-box{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--ink);
+    border:1px solid var(--line);
+    padding:10px 14px;
+    border-radius:2px;
+    margin-bottom:16px;
+  }
+  .timer-clock{
+    font-family:'Special Elite', monospace;
+    font-size:24px;
+    color:var(--gold);
+    letter-spacing:0.1em;
+    min-width:70px;
+  }
+  .timer-clock.urgent{
+    color:var(--redact);
+    animation:timerPulse 1s infinite;
+  }
+  @keyframes timerPulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.4;}
+  }
+  .timer-actions{
+    display:flex;
+    gap:8px;
+  }
+  .timer-btn{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--paper-dim);
+    padding:6px 12px;
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    cursor:pointer;
+    border-radius:2px;
+  }
+  .timer-btn:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+
+  /* Hold to reveal styling */
+  .hold-hint{
+    font-size:11.5px;
+    color:var(--gold);
+    margin-top:14px;
+    opacity:0.95;
+    text-align:center;
+  }
+  .file-card.holding{
+    transform:rotateY(180deg);
+  }
+
+  /* Options Accordion / Checkbox styling */
+  .toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 0;
+    font-size:12px;
+    color:var(--paper-dim);
+    cursor:pointer;
+  }
+  .toggle-row input[type="checkbox"]{
+    accent-color:var(--gold);
+    width:16px;
+    height:16px;
+    cursor:pointer;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .file-card{transition:none;}
   }
@@ -341,10 +777,85 @@
 <body>
 <div class="wrap">
 
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <button type="button" class="top-btn" id="soundToggleBtn">
+      <span id="soundIcon">🔊</span> <span id="soundLabel">SON: ACTIF</span>
+    </button>
+    <button type="button" class="top-btn hidden" id="topPeekBtn" title="Consulter discrètement votre mot">
+      <span>🤫</span> <span>MON MOT</span>
+    </button>
+    <button type="button" class="top-btn" id="rulesBtn">
+      <span>📋</span> <span>MANUEL D'AGENT</span>
+    </button>
+  </div>
+
+  <!-- PEEK WORD MODAL (Mot oublié) -->
+  <div id="peekModal" class="modal-backdrop hidden">
+    <div class="modal-sheet">
+      <h3>RAPPEL DU MOT SECRET</h3>
+      <div class="hint" style="margin-bottom:14px; color:var(--paper-dim);">
+        Consultez discrètement votre mot à l'abri des regards. Le rôle n'est jamais affiché pour préserver le secret.
+      </div>
+
+      <div class="field">
+        <label>Votre nom / identité</label>
+        <div class="theme-select-wrap">
+          <select id="peekPlayerSelect" class="theme-select"></select>
+        </div>
+      </div>
+
+      <div class="card-stage" style="margin-top:14px;">
+        <div class="file-card" id="peekCard">
+          <div class="face face-front">
+            <div class="stamp">DOSSIER PERSONNEL</div>
+            <div class="tap-hint" id="peekTapHint">Touchez la carte pour révéler</div>
+          </div>
+          <div class="face face-back" id="peekCardBack">
+            <div class="label" id="peekCardLabel">VOTRE MOT SECRET</div>
+            <div class="word" id="peekCardWord">—</div>
+            <div class="translit" id="peekCardTranslit"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hold-hint hidden" id="peekHoldHint">Maintenez le doigt appuyé pour garder le mot visible</div>
+
+      <div class="confirm-row" style="margin-top:16px;">
+        <button type="button" class="btn-primary" id="closePeekBtn">Masquer & Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES / BRIEFING MODAL -->
+  <div id="rulesModal" class="modal-backdrop hidden">
+    <div class="modal-sheet">
+      <h3>MANUEL DE MISSION</h3>
+      <div class="rule-block">
+        <h4>🎯 OBJECTIF DU JEU</h4>
+        <p>Démasquer tous les imposteurs infiltrés avant qu'ils ne soient en surnombre ou que Mr. White ne devine le mot secret.</p>
+      </div>
+      <div class="rule-block">
+        <h4>👥 LES RÔLES</h4>
+        <p>• <b>CIVILS :</b> Reçoivent tous le même mot secret. Donnez un indice subtil pour prouver votre identité sans trop en dire.</p>
+        <p style="margin-top:6px;">• <b>MR. WHITE :</b> Ne reçoit AUCUN mot. Écoutez attentivement, déduisez le contexte et bluffez. S'il est démasqué au vote, il a une dernière chance : s'il devine le mot des civils, il vole la victoire !</p>
+        <p style="margin-top:6px;">• <b>UNDERCOVER :</b> Reçoit un mot proche mais différent de celui des civils. Il cherche aussi à se fondre dans la masse sans se faire repérer.</p>
+      </div>
+      <div class="rule-block">
+        <h4>🎙️ PREMIER ORATEUR ÉQUITABLE</h4>
+        <p>Pour un jeu 100% équitable, l'application désigne toujours un <b>premier orateur garanti Civil</b> (Mr. White n'est jamais forcé de parler en premier à l'aveugle).</p>
+      </div>
+      <div class="rule-block">
+        <h4>⚖️ ÉLIMINATION SUR LE TABLEAU</h4>
+        <p>Après le débat, touchez n'importe quel agent sur le tableau des suspects pour l'interroger et révéler son identité.</p>
+      </div>
+      <button type="button" class="btn-primary" id="closeRulesBtn" style="margin-top:14px;">COMPRIS — FERMER LE DOSSIER</button>
+    </div>
+  </div>
+
   <header>
     <div class="kicker">Dossier Confidentiel</div>
-    <h1>MR. <span>WHITE</span></h1>
-    <div class="subtitle">Un imposteur se cache parmi vous. Trouvez-le avant qu'il ne devine le mot.</div>
+    <h1>ISHAK's <span>UNDERCOVER</span></h1>
+    <div class="subtitle">Des imposteurs se cachent parmi vous. Trouvez-les avant qu'ils ne devinent le mot.</div>
   </header>
 
   <!-- SETUP SCREEN -->
@@ -359,6 +870,16 @@
     </div>
 
     <div class="field">
+      <label>Identification des agents</label>
+      <div class="mode-toggle">
+        <button type="button" class="mode-btn active" id="nameModeNums" data-namemode="nums">Numéros</button>
+        <button type="button" class="mode-btn" id="nameModeCodes" data-namemode="codes">Noms de code</button>
+        <button type="button" class="mode-btn" id="nameModeCustom" data-namemode="custom">Prénoms</button>
+      </div>
+      <div id="customNamesBox" class="custom-names-box hidden"></div>
+    </div>
+
+    <div class="field">
       <label>Mode de jeu</label>
       <div class="mode-toggle mode-toggle-3">
         <button type="button" class="mode-btn active" id="modeBlankBtn" data-mode="blank">Mr. White</button>
@@ -366,6 +887,24 @@
         <button type="button" class="mode-btn" id="modeMixBtn" data-mode="mix">Les deux</button>
       </div>
       <div class="note" id="modeNote">L'imposteur ne reçoit aucun mot — il doit bluffer.</div>
+    </div>
+
+    <div class="field">
+      <label>Thème du dossier <span class="val" id="themeVal">Tous les thèmes</span></label>
+      <div class="theme-select-wrap">
+        <select id="themeSelect" class="theme-select">
+          <option value="all">🌐 Tous les thèmes (Mix Global)</option>
+          <option value="food">🍔 Nourriture & Boissons</option>
+          <option value="maghreb">🇲🇦 Spécial Darija & Maghreb</option>
+          <option value="animals">🦁 Animaux & Nature</option>
+          <option value="objects">📦 Objets du Quotidien</option>
+          <option value="places">🏙️ Lieux, Villes & Voyages</option>
+          <option value="roles">💼 Métiers & Personnages</option>
+          <option value="culture">🎭 Loisirs, Sport & Pop Culture</option>
+          <option value="tech">💻 High-Tech & Geek</option>
+        </select>
+      </div>
+      <div class="note" id="themeNote">Dossier complet : tous les secteurs d'espionnage mélangés.</div>
     </div>
 
     <div class="field" id="singleImpField">
@@ -397,16 +936,39 @@
       <div class="note" id="mixSummary" style="margin-top:14px; color:var(--gold); opacity:0.9;"></div>
     </div>
 
-    <button class="btn-primary" id="startBtn">Lancer la manche</button>
+    <!-- Advanced Options -->
+    <div class="field" style="border-top:1px solid var(--line); padding-top:14px; margin-top:14px;">
+      <label>Options de jeu</label>
+      <label class="toggle-row">
+        <span>Garantir un civil en 1er orateur</span>
+        <input type="checkbox" id="optFirstCivil" checked>
+      </label>
+      <label class="toggle-row">
+        <span>Chronomètre de débat</span>
+        <select id="timerSelect" class="theme-select" style="width:auto; padding:4px 24px 4px 10px; font-size:11.5px;">
+          <option value="0">Désactivé</option>
+          <option value="60">60 secondes</option>
+          <option value="90" selected>90 secondes</option>
+          <option value="120">2 minutes</option>
+        </select>
+      </label>
+      <label class="toggle-row">
+        <span>Maintenir pour voir (anti-regard indiscret)</span>
+        <input type="checkbox" id="optHoldPeek">
+      </label>
+    </div>
+
+    <button class="btn-primary" id="startBtn">Lancer la mission</button>
   </div>
 
   <!-- PASS SCREEN -->
   <div id="screen-pass" class="panel hidden">
     <div class="pass-card">
+      <div class="progress-dots" id="passProgressDots"></div>
       <div class="agent-no" id="passAgentNo">AGENT N°1</div>
       <h2 id="passName">Passez le téléphone</h2>
-      <div class="hint">Assurez-vous que personne d'autre ne regarde l'écran.</div>
-      <button class="btn-primary" id="revealBtn">Je suis prêt — révéler</button>
+      <div class="hint" id="passHint">Assurez-vous que personne d'autre ne regarde l'écran.</div>
+      <button class="btn-primary" id="revealBtn">Je suis prêt — Révéler mon dossier</button>
     </div>
   </div>
 
@@ -416,265 +978,610 @@
       <div class="file-card" id="fileCard">
         <div class="face face-front">
           <div class="stamp">DOSSIER SCELLÉ</div>
-          <div class="tap-hint">Touchez la carte pour révéler</div>
+          <div class="tap-hint" id="cardTapHint">Touchez la carte pour révéler</div>
         </div>
         <div class="face face-back" id="cardBack">
-          <div class="label">Votre mot</div>
+          <div class="label" id="cardRoleLabel">Votre mot secret</div>
           <div class="word" id="cardWord">—</div>
           <div class="translit" id="cardTranslit"></div>
         </div>
       </div>
     </div>
+    <div class="hold-hint hidden" id="cardHoldHint">Maintenez le doigt appuyé pour garder le mot visible</div>
     <div class="confirm-row">
-      <button class="btn-primary" id="nextPlayerBtn">C'est noté — passer au suivant</button>
+      <button class="btn-primary" id="nextPlayerBtn">Masquer & passer au joueur suivant</button>
     </div>
   </div>
 
-  <!-- END / RECAP SCREEN -->
+  <!-- END / DISCUSSION & SUSPECTS SCREEN -->
   <div id="screen-end" class="panel hidden">
-    <div class="pass-card" style="padding-top:10px;">
-      <div class="agent-no">Tous les dossiers ont été distribués</div>
-      <h2>Que le jeu commence</h2>
-      <div class="hint">Chacun donne un indice à tour de rôle, sans dire le mot. Débattez, puis votez pour démasquer l'imposteur.</div>
+    <div class="pass-card" style="padding:10px 0 6px;">
+      <div class="agent-no">Dossiers distribués — Phase d'enquête</div>
+      <h2 style="font-size:24px; margin-bottom:8px;">Débat & Démasquage</h2>
+      <div class="hint" style="margin-bottom:12px;">Chacun donne un indice à tour de rôle sans prononcer son mot. Débattez, puis votez pour éliminer un suspect.</div>
     </div>
+
+    <!-- First Speaker Banner -->
+    <div class="speaker-box" id="speakerBox">
+      <div class="speaker-kicker">🎙️ Premier orateur désigné (Garanti Civil)</div>
+      <div class="speaker-name" id="speakerName">Agent 1</div>
+      <div class="speaker-desc">Donne son indice en premier. Le tour d'indices continue ensuite autour de la table.</div>
+    </div>
+
+    <!-- Discreet Word Reminder Button -->
+    <button type="button" class="btn-ghost" id="peekWordBtn" style="border-style:dashed; border-color:var(--teal); color:var(--paper); margin:8px 0 16px;">
+      🤫 Mot oublié ? Vérifier discrètement son mot
+    </button>
+
+    <!-- Debate Timer -->
+    <div id="timerBox" class="timer-box hidden">
+      <div>
+        <div style="font-size:10px; color:var(--paper-dim); letter-spacing:0.1em; text-transform:uppercase;">Temps de débat</div>
+        <div class="timer-clock" id="timerClock">01:30</div>
+      </div>
+      <div class="timer-actions">
+        <button type="button" class="timer-btn" id="timerToggleBtn">Démarrer</button>
+        <button type="button" class="timer-btn" id="timerResetBtn">Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- Victory Banner (Hidden by default, shown on game over) -->
+    <div id="victoryBanner" class="victory-banner hidden">
+      <div class="victory-stamp" id="victoryStamp">RAPPORT DE MISSION</div>
+      <div class="victory-title" id="victoryTitle">VICTOIRE DES CIVILS !</div>
+      <div class="victory-sub" id="victorySub">Tous les imposteurs ont été démasqués avec succès.</div>
+    </div>
+
+    <!-- Suspects Board Header -->
+    <div class="suspects-board-header">
+      <div class="suspects-board-title">TABLEAU DES SUSPECTS</div>
+      <div class="suspect-counts">
+        <span>Civils : <b id="countLivingCivils">0</b></span>
+        <span>Imposteurs : <b id="countLivingImposters">0</b></span>
+      </div>
+    </div>
+
+    <!-- Suspects Grid -->
+    <div class="suspects-grid" id="suspectsGrid"></div>
+
+    <!-- Recap secret info -->
     <div class="roster">
+      <div class="roster-row"><span>Secteur / Thème :</span><b id="recapTheme">—</b></div>
       <div class="roster-row"><span>Mot du groupe :</span><b id="recapWord">—</b></div>
       <div class="roster-row"><span>Imposteur(s) :</span><b id="recapImp">—</b></div>
     </div>
-    <button class="btn-primary" id="checkVoteBtn">Le groupe a voté — vérifier un joueur</button>
-    <button class="btn-ghost" id="revealAllBtn">Afficher tous les rôles (fin de manche)</button>
+
+    <button class="btn-primary" id="revealAllBtn" style="margin-top:16px;">Afficher tous les dossiers secrets (Fin de manche)</button>
     <button class="btn-ghost" id="replayBtn">Nouvelle manche</button>
   </div>
 
-  <!-- VOTE CHECK SCREEN -->
+  <!-- INTERROGATION / SUSPECT REVEAL SCREEN -->
   <div id="screen-vote" class="panel hidden">
-    <div class="field">
-      <label>Joueur voté <span class="val" id="voteAgentVal">Agent 1</span></label>
-      <div class="stepper">
-        <button type="button" id="voteAgentMinus">−</button>
-        <div class="count" id="voteAgentCount">1</div>
-        <button type="button" id="voteAgentPlus">+</button>
-      </div>
+    <div class="field" style="text-align:center; margin-bottom:12px;">
+      <div class="kicker" style="color:var(--gold);">INTERROGATOIRE DE SUSPECT</div>
+      <h2 id="voteSuspectTitle" style="font-family:'Special Elite', monospace; font-size:24px; margin:4px 0 8px;">Agent 1</h2>
+      <div class="hint" id="voteSuspectHint">Le groupe a voté contre cet agent. Révélez son identité secrète.</div>
     </div>
 
     <div class="card-stage">
       <div class="file-card" id="voteCard">
         <div class="face face-front">
-          <div class="stamp">IDENTITÉ SCELLÉE</div>
-          <div class="tap-hint">Touchez pour révéler son rôle</div>
+          <div class="stamp">IDENTITÉ DU SUSPECT</div>
+          <div class="tap-hint">Touchez pour démasquer son rôle</div>
         </div>
         <div class="face face-back" id="voteCardBack">
-          <div class="label">Rôle démasqué</div>
+          <div class="label" id="voteCardRoleLabel">Rôle démasqué</div>
           <div class="word" id="voteCardWord">—</div>
           <div class="translit" id="voteCardSub"></div>
         </div>
       </div>
     </div>
 
-    <div id="whiteGuessBox" class="hidden" style="margin-top:16px;">
-      <div class="note">Mr. White peut tenter de deviner le mot des civils pour renverser la partie. A-t-il deviné juste ?</div>
-      <div class="mode-toggle" style="margin-top:10px;">
-        <button type="button" class="mode-btn" id="whiteGuessYes">Oui, il a gagné</button>
-        <button type="button" class="mode-btn" id="whiteGuessNo">Non, il a perdu</button>
+    <div id="whiteGuessBox" class="hidden" style="margin-top:16px; background:var(--ink); border:1px solid var(--gold); padding:16px; border-radius:2px;">
+      <div class="kicker" style="color:var(--gold); font-size:10px; margin-bottom:4px;">TENTATIVE DE DÉDUCTION DE MR. WHITE</div>
+      <div class="note" style="color:var(--paper); font-size:12px; margin-bottom:12px; line-height:1.4;">
+        Mr. White est démasqué ! Il peut tenter de deviner le mot secret des civils pour voler la victoire :
       </div>
-      <div class="note" id="whiteGuessResult" style="margin-top:10px; color:var(--gold);"></div>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="whiteGuessInput" class="theme-select" placeholder="Tapez le mot secret..." style="flex:1; padding:10px 12px; background:var(--ink-2); font-size:13.5px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button type="button" class="btn-primary" id="whiteGuessSubmit" style="width:auto; margin:0; padding:10px 18px; font-size:12px; white-space:nowrap;">Vérifier</button>
+      </div>
+      <div id="whiteGuessFeedback" class="hidden" style="margin-top:12px; padding:10px; border-radius:2px; font-size:12.5px; line-height:1.5;"></div>
+      <div id="whiteGuessManualWrap" class="hidden" style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">
+        <div style="font-size:11px; color:var(--paper-dim); margin-bottom:8px;">Le groupe accepte-t-il cette proposition comme synonyme valide ?</div>
+        <div class="mode-toggle">
+          <button type="button" class="mode-btn" id="whiteGuessYes">Valider la victoire</button>
+          <button type="button" class="mode-btn" id="whiteGuessNo">Refuser (Éliminer)</button>
+        </div>
+      </div>
     </div>
 
-    <button class="btn-ghost" id="backToEndBtn" style="margin-top:18px;">Retour</button>
+    <div class="confirm-row">
+      <button class="btn-primary" id="confirmEliminateBtn" style="margin-top:16px;">Confirmer l'élimination</button>
+      <button class="btn-ghost" id="backToEndBtn">Annuler (Fausse alerte)</button>
+    </div>
   </div>
 
-  <div class="footer-note">MR. WHITE — Jeu de société de bluff — hors-ligne, aucune donnée conservée</div>
+  <div class="footer-note">ISHAK's UNDERCOVER — Jeu de société de déduction — 100% hors-ligne, aucune donnée conservée</div>
 </div>
 
 <script>
 (function(){
-  // ---- Word bank (Arabic / English) ----
-  const WORDS = [
-    ["تفاحة","Apple"],["قهوة","Coffee"],["خبز","Bread"],["عسل","Honey"],["تمر","Dates"],
-    ["شاي","Tea"],["زيتون","Olive"],["جبن","Cheese"],["بطيخ","Watermelon"],["حليب","Milk"],
-    ["أسد","Lion"],["قطة","Cat"],["جمل","Camel"],["حصان","Horse"],["فيل","Elephant"],
-    ["نمر","Tiger"],["ذئب","Wolf"],["طائر","Bird"],["سمكة","Fish"],["أرنب","Rabbit"],
-    ["مدرسة","School"],["مسجد","Mosque"],["مطار","Airport"],["سوق","Market"],["شاطئ","Beach"],
-    ["صحراء","Desert"],["مستشفى","Hospital"],["جبل","Mountain"],["مطعم","Restaurant"],["حديقة","Garden/Park"],
-    ["مفتاح","Key"],["ساعة","Watch/Clock"],["كتاب","Book"],["هاتف","Phone"],["كرسي","Chair"],
-    ["مرآة","Mirror"],["سيارة","Car"],["حقيبة","Bag"],["مصباح","Lamp"],["سكين","Knife"],
-    ["شمس","Sun"],["قمر","Moon"],["مطر","Rain"],["بحر","Sea"],["نجمة","Star"],
-    ["ريح","Wind"],["ثلج","Snow"],["نار","Fire"],["سحاب","Clouds"],["رمل","Sand"],
-    ["طبيب","Doctor"],["معلم","Teacher"],["طباخ","Chef"],["شرطي","Police officer"],["مهندس","Engineer"],
-    ["فلاح","Farmer"],["ممثل","Actor"],["طيار","Pilot"],["نجار","Carpenter"],["صياد","Fisherman"],
-    ["حب","Love"],["خوف","Fear"],["فرح","Joy"],["غضب","Anger"],["سلام","Peace"],
-    ["حرية","Freedom"],["صداقة","Friendship"],["حزن","Sadness"],["أمل","Hope"],["شجاعة","Courage"],
-    ["كرة القدم","Football/Soccer"],["سباحة","Swimming"],["جري","Running"],["رقص","Dancing"],["قراءة","Reading"],
-    ["طبخ","Cooking"],["رسم","Drawing"],["سفر","Traveling"],["تسلق","Climbing"],["صيد","Hunting/Fishing"],
-    ["طاولة","Table"],["سرير","Bed"],["باب","Door"],["نافذة","Window"],["صابون","Soap"],
-    ["فرشاة","Brush"],["منشفة","Towel"],["إبرة","Needle"],["مقص","Scissors"],["وسادة","Pillow"],
-    ["عين","Eye"],["يد","Hand"],["قلب","Heart"],["أذن","Ear"],["شعر","Hair"],
-    ["أنف","Nose"],["رجل","Leg/Foot"],["إصبع","Finger"],["فم","Mouth"],["ظهر","Back"],
-    ["قميص","Shirt"],["حذاء","Shoe"],["قبعة","Hat"],["فستان","Dress"],["جاكيت","Jacket"],
-    ["جورب","Sock"],["نظارة","Glasses"],["خاتم","Ring"],["حزام","Belt"],["وشاح","Scarf"],
-    ["حاسوب","Computer"],["إنترنت","Internet"],["كاميرا","Camera"],["شاحن","Charger"],["طابعة","Printer"],
-    ["تلفزيون","Television"],["سماعة","Headphones/Speaker"],["لوحة مفاتيح","Keyboard"],["روبوت","Robot"],["شاشة","Screen"],
-    ["أحمر","Red"],["أزرق","Blue"],["أخضر","Green"],["أصفر","Yellow"],["أسود","Black"],
-    ["أبيض","White"],["بنفسجي","Purple"],["برتقالي","Orange"],["وردي","Pink"],["رمادي","Gray"],
-    ["أم","Mother"],["أب","Father"],["أخ","Brother"],["أخت","Sister"],["جد","Grandfather"],
-    ["جدة","Grandmother"],["صديق","Friend"],["طفل","Child"],["عروس","Bride"],["ملك","King"],
-    ["يوم","Day"],["ليل","Night"],["أسبوع","Week"],["شهر","Month"],["عيد","Holiday/Festival"],
-    ["صباح","Morning"],["مساء","Evening"],["عطلة","Vacation"],["ماضي","Past"],["مستقبل","Future"],
-    ["أغنية","Song"],["عود","Oud (instrument)"],["طبل","Drum"],["لوحة","Painting"],["مسرح","Theater"],
-    ["شعر","Poetry"],["نغمة","Melody"],["مايسترو","Conductor"],["خط","Calligraphy"],["تمثال","Statue"],
-    ["كوكب","Planet"],["نجم","Star"],["فضاء","Space"],["صاروخ","Rocket"],["مجرة","Galaxy"],
-    ["تجربة","Experiment"],["مجهر","Microscope"],["ذرة","Atom"],["جاذبية","Gravity"],["كسوف","Eclipse"],
-    ["طائرة","Airplane"],["قطار","Train"],["دراجة","Bicycle"],["سفينة","Ship"],["حافلة","Bus"],
-    ["قارب","Boat"],["شاحنة","Truck"],["مترو","Metro/Subway"],["مركبة فضائية","Spacecraft"],["عربة","Cart/Carriage"],
-    ["فرعون","Pharaoh"],["هرم","Pyramid"],["ملكة","Queen"],["جندي","Soldier"],["قلعة","Castle"],
-    ["سيف","Sword"],["درع","Shield/Armor"],["عرش","Throne"],["أسطورة","Legend/Myth"],["تنين","Dragon"],
-    ["قلم","Pen"],["دفتر","Notebook"],["سبورة","Whiteboard/Blackboard"],["امتحان","Exam"],["فصل","Classroom"],
-    ["واجب","Homework"],["شهادة","Certificate/Diploma"],["مكتب","Desk/Office"],["اجتماع","Meeting"],["راتب","Salary"],
-    ["نقود","Money"],["بنك","Bank"],["فاتورة","Bill/Invoice"],["بطاقة","Card"],["خصم","Discount"],
-    ["ثمن","Price"],["محفظة","Wallet"],["عملة","Currency/Coin"],["كاشير","Cashier"],["كنز","Treasure"],
-    ["زلزال","Earthquake"],["فيضان","Flood"],["عاصفة","Storm"],["برق","Lightning"],["رعد","Thunder"],
-    ["حريق","Fire (blaze)"],["بركان","Volcano"],["إعصار","Hurricane/Tornado"],["جفاف","Drought"],["ضباب","Fog"],
-    ["لعبة","Game/Toy"],["كرة","Ball"],["شطرنج","Chess"],["ورق لعب","Playing cards"],["دمية","Doll"],
-    ["بالون","Balloon"],["أرجوحة","Swing"],["لغز","Puzzle"],["حفلة","Party"],["سيرك","Circus"],
-    ["كنيسة","Church"],["صلاة","Prayer"],["عيد الفطر","Eid al-Fitr"],["رمضان","Ramadan"],["حج","Pilgrimage (Hajj)"],
-    ["تراث","Heritage"],["عادات","Customs/Traditions"],["زفاف","Wedding"],["ضيافة","Hospitality"],
-    ["شجرة","Tree"],["وردة","Rose/Flower"],["عشب","Grass"],["غابة","Forest"],["جذر","Root"],
-    ["ورقة","Leaf"],["بذرة","Seed"],["نخلة","Palm tree"],["زهرة","Flower"],["حديقة نباتات","Botanical garden"],
-    ["فيلم","Movie"],["ممثلة","Actress"],["مخرج","Director"],["قصة","Story"],["بطل","Hero"],
-    ["شرير","Villain"],["مسلسل","TV series"],["جمهور","Audience"],["نهاية","Ending"],
-    ["نوم","Sleep"],["أكل","Eating"],["ضحك","Laughing"],["بكاء","Crying"],["مشي","Walking"],
-    ["قفز","Jumping"],["تكلم","Talking"],["كتابة","Writing"],["استماع","Listening"],["انتظار","Waiting"],
-    ["دواء","Medicine"],["مرض","Illness"],["حقنة","Injection"],["ضمادة","Bandage"],["حمى","Fever"],
-    ["عملية","Surgery/Operation"],["صيدلية","Pharmacy"],["ألم","Pain"],["علاج","Treatment"],["تعافي","Recovery"],
-    ["قوس قزح","Rainbow"],["شفق","Twilight/Dawn"],["فجر","Dawn"],["غروب","Sunset"],["زلال","Dew"],
-    ["موج","Wave"],["شلال","Waterfall"],["كهف","Cave"],["واحة","Oasis"],["جزيرة","Island"],
-    ["وقت","Time"],["ذاكرة","Memory"],["حلم","Dream"],["خيال","Imagination"],["حظ","Luck"],
-    ["قدر","Destiny/Fate"],["صبر","Patience"],["ثقة","Trust"],["غموض","Mystery"],["توازن","Balance"]
-  ];
+  // ---- Themed Word Banks (Arabic / French & Darija) ----
+  const THEMES = {
+    food: {
+      name: "Nourriture & Boissons",
+      desc: "Plats, boissons, douceurs et ingrédients du quotidien.",
+      pairs: [
+        [["قهوة", "Café (Qahwa)"], ["شاي", "Thé (Atay)"]],
+        [["عصير", "Jus de fruits (3assir)"], ["مشروب غازي", "Soda / Boisson gazeuse (Mounada)"]],
+        [["خبز", "Pain (Khobz)"], ["مسمن", "Crêpe feuilletée (Msemmen)"]],
+        [["جبن", "Fromage (Jben)"], ["زبدة", "Beurre (Zebda)"]],
+        [["تفاحة", "Pomme (Teffa7a)"], ["إجاص", "Poire (Njas)"]],
+        [["برتقال", "Orange (Limoun)"], ["ليمون", "Citron (7amed)"]],
+        [["عسل", "Miel (3ssel)"], ["مربى", "Confiture"]],
+        [["سكر", "Sucre (Sokkar)"], ["ملح", "Sel (Mel7a)"]],
+        [["حليب", "Lait (7lib)"], ["لبن", "Lait fermenté (Lben)"]],
+        [["تمر", "Dattes (Tmer)"], ["تين", "Figues (Kermous)"]],
+        [["بطيخ أحمر", "Pastèque (Delle7)"], ["شمام", "Melon jaune (Bettikh)"]],
+        [["شاورما", "Chawarma"], ["تاكوس", "Tacos"]],
+        [["بيتزا", "Pizza"], ["فطيرة", "Tarte / Quiche"]],
+        [["لحم", "Viande (L7em)"], ["دجاج", "Poulet (Djej)"]],
+        [["سمك", "Poisson (7out)"], ["فواكه البحر", "Fruits de mer"]],
+        [["أرز", "Riz (Rouz)"], ["معكرونة", "Pâtes (Maqrouna)"]],
+        [["بطاطس مقلية", "Frites (Frit)"], ["بطاطس مسلوقة", "Purée de pommes de terre"]],
+        [["شوكولاتة", "Chocolat"], ["كراميل", "Caramel"]],
+        [["مثلجات", "Glace (La glace)"], ["عصير مثلج", "Smoothie / Sorbet"]],
+        [["زيتون", "Olives (Zitoun)"], ["زيت الزيتون", "Huile d'olive (Zit l3oud)"]],
+        [["بصل", "Oignon (Bsel)"], ["ثوم", "Ail (Touma)"]],
+        [["طماطم", "Tomate (Maticha)"], ["صلصة", "Sauce tomate"]],
+        [["سلطة", "Salade (Chlada)"], ["حساء", "Soupe / Velouté"]],
+        [["كرواسون", "Croissant"], ["بان شوكولا", "Pain au chocolat"]],
+        [["بسكويت", "Biscuit"], ["كعكة", "Gâteau (Kika)"]],
+        [["خل", "Vinaigre (Khel)"], ["مايونيز", "Mayonnaise"]],
+        [["خردل", "Moutarde"], ["كاتشب", "Ketchup"]],
+        [["مكسرات", "Fruits secs (Fakya)"], ["فول سوداني", "Cacahuètes (Kawkaw)"]],
+        [["نعناع", "Menthe (N3na3)"], ["ريحان", "Basilic (7baq)"]],
+        [["ماء معدني", "Eau minérale (Lma)"], ["ماء فوار", "Eau gazeuse (Oulmès)"]]
+      ],
+      words: [
+        ["حريرة", "Harira"], ["أومليت", "Omelette"], ["سندويش", "Sandwich"],
+        ["فراولة", "Fraise (Friz)"], ["موز", "Banane (Banan)"], ["عنب", "Raisin (3neb)"],
+        ["باذنجان", "Aubergine (Danjal)"], ["جزر", "Carotte (Khizzou)"], ["خيار", "Concombre (Khiyar)"],
+        ["فلفل حلو", "Poivron (Felfla)"], ["فلفل حار", "Piment fort (7ar)"], ["أفوكادو", "Avocat"],
+        ["تونة", "Thon"], ["سردين", "Sardine"], ["قرفة", "Cannelle (Qerfa)"],
+        ["كمون", "Cumin (Kammoun)"], ["زعفران", "Safran (Z3fran)"], ["كسروطة", "Goûter (Kaskrout)"]
+      ]
+    },
+    maghreb: {
+      name: "Spécial Darija & Maghreb",
+      desc: "Culture marocaine et maghrébine, plats emblématiques et traditions.",
+      pairs: [
+        [["طاجين", "Tajine"], ["كسكس", "Couscous (Seksu)"]],
+        [["حريرة", "Harira"], ["حسوة", "Tchicha / Soupe d'orge"]],
+        [["أتاي مشحر", "Thé à la menthe (Atay)"], ["قهوة نص نص", "Café au lait (Noss-noss)"]],
+        [["مسمن", "Msemmen"], ["بغرير", "Baghrir (Mille trous)"]],
+        [["سفنج", "Sfenj (Beignet)"], ["حرشة", "Harcha (Galette semoule)"]],
+        [["بسطيلة دجاج", "Pastilla Poulet"], ["بسطيلة حوت", "Pastilla Fruits de mer"]],
+        [["رفيسة", "Rfissa"], ["تريد", "Trid"]],
+        [["شباكية", "Chebakia"], ["سلو", "Sellou / Sfouf"]],
+        [["بريوات", "Briouates"], ["محنشة", "M7encha"]],
+        [["كرعين", "Kour3ine (Pois chiches)"], ["تقلية", "Teqliya / Douara"]],
+        [["حمام بلدي", "Hammam Beldi"], ["دوش عصري", "Douche moderne"]],
+        [["كيس الحمام", "Kessa (Gant gommage)"], ["صابون بلدي", "Savon noir Beldi"]],
+        [["قفطان", "Caftan"], ["تكشيطة", "Takchita"]],
+        [["جلابة", "Djellaba"], ["جابادور", "Jabador"]],
+        [["بلغة فاسوية", "Belgha (Babouche jaune)"], ["شربيل", "Cherbil (Babouche femme)"]],
+        [["طربوش وطني", "Tarbouche rouge (Fez)"], ["رزة", "Rezza (Turban)"]],
+        [["صينية أتاي", "Siniya d'Atay (Plateau sculpté)"], ["براد مشحر", "Berrad (Théière marocaine)"]],
+        [["زليج بلدي", "Zellige marocain"], ["نقش على الجبس", "Plâtre sculpté (Gabs)"]],
+        [["سوق أسبوعي", "Souk hebdomadaire"], ["قيسارية", "Kissaria (Marché couvert)"]],
+        [["مول الحانوت", "Moul El Hanout (Épicier du coin)"], ["سوبرمارشي", "Supermarché / Mall"]],
+        [["طاكسي صغير", "Petit Taxi (Course urbaine)"], ["طاكسي كبير", "Grand Taxi interurbain"]],
+        [["كوتشي", "Calèche (Koutchi)"], ["كار CTM", "Autocar CTM / Supratours"]],
+        [["درب قديم", "Derb (Ruelle de Médina)"], ["رياض", "Riad traditionnel"]],
+        [["عمارية", "3amaria (Mariage traditionnel)"], ["نكافة", "Neggafa (Cérémonie)"]],
+        [["دقة مراكشية", "Daqqa Marrakchia"], ["موسيقى كناوة", "Musique Gnaoua"]],
+        [["شيشة", "Chicha"], ["سبسي", "Sebsi traditionnel"]],
+        [["غاسول", "Ghassoul"], ["ماء زهر", "Eau de fleur d'oranger (Mazhar)"]],
+        [["مجمر وفحم", "Mejmar (Brasero charbon)"], ["كانون", "Kanoun en argile"]]
+      ],
+      words: [
+        ["قصبة", "Kasbah"], ["منارة", "Menara"], ["جامع الفنا", "Place Jemaa el-Fna"],
+        ["باب المنصور", "Bab El Mansour"], ["قطبان كفتة", "Brochettes de kefta"], ["لوبيا حارة", "Loubia piquante"],
+        ["عدس بالقديد", "Lentilles au Gueddid"], ["ميراندينا", "Merendina"], ["رايبي جميلة", "Raibi Jamila"],
+        ["عساس الطوموبيلات", "Gardien de parking (Gilet jaune)"], ["بريمة وكسكاس", "Couscoussier (Keskas)"],
+        ["ميدونة", "Maydouna"], ["شرقي", "Chergui (Vague de chaleur)"], ["فلكة", "Barque de pêche (Flouka)"]
+      ]
+    },
+    animals: {
+      name: "Animaux & Nature",
+      desc: "Faune terrestre et aquatique, oiseaux, phénomènes météo et paysages.",
+      pairs: [
+        [["أسد", "Lion (Sbe3)"], ["نمر", "Tigre (Nmer)"]],
+        [["ذئب", "Loup (Dib)"], ["ثعلب", "Renard (Thta3leb)"]],
+        [["كلب", "Chien (Kelb)"], ["قط", "Chat (Qett)"]],
+        [["حصان", "Cheval (3awd)"], ["حمار", "Âne (7mar)"]],
+        [["جمل", "Chameau (Jmel)"], ["لاما", "Lama"]],
+        [["فيل", "Éléphant (Fil)"], ["وحيد القرن", "Rhinocéros"]],
+        [["أرنب", "Lapin (Qnin)"], ["فأر", "Souris (Far)"]],
+        [["نسر", "Aigle (Nser)"], ["صقر", "Faucon (Seqr)"]],
+        [["بومة", "Chouette / Hibou (Bouma)"], ["غراب", "Corbeau (Ghrab)"]],
+        [["سمكة", "Poisson (7outa)"], ["قرش", "Requin"]],
+        [["دلفين", "Dauphin"], ["حوت أزرق", "Baleine bleue"]],
+        [["أخطبوط", "Poulpe (Rteyl)"], ["حبار", "Calamar"]],
+        [["تمساح", "Crocodile (Temsa7)"], ["سحلية", "Lézard (Zermoumiya)"]],
+        [["ثعبان", "Serpent (Lfe3)"], ["عقرب", "Scorpion (3egreba)"]],
+        [["دجاجة", "Poule (Djeja)"], ["ديك", "Coq (Frouj)"]],
+        [["بطة", "Canard (Batta)"], ["إوزة", "Oie"]],
+        [["بقرة", "Vache (Begra)"], ["خروف", "Mouton / Bélier (7awli)"]],
+        [["ماعز", "Chèvre (M3za)"], ["غزالة", "Gazelle (Ghzala)"]],
+        [["قرد", "Singe (Qerd)"], ["غوريلا", "Gorille"]],
+        [["دب قطبي", "Ours polaire"], ["دب بني", "Ours brun"]],
+        [["نحلة", "Abeille (Ne7la)"], ["دبور", "Frelon / Guêpe"]],
+        [["فراشة", "Papillon (Fertettou)"], ["يعسوب", "Libellule"]],
+        [["نملة", "Fourmi (Nemla)"], ["صرصور", "Cafard (Serraq zzit)"]],
+        [["شمس", "Soleil (Chems)"], ["قمر", "Lune (Qmer)"]],
+        [["مطر", "Pluie (Chta)"], ["ثلج", "Neige (Telj)"]],
+        [["عاصفة", "Tempête (3assifa)"], ["إعصار", "Ouragan / Tornade"]],
+        [["بحر", "Mer (B7er)"], ["محيط", "Océan"]],
+        [["نهر", "Rivière / Fleuve (Oued)"], ["شلال", "Cascade"]],
+        [["جبل", "Montagne (Jbel)"], ["بركان", "Volcan"]],
+        [["صحراء", "Désert (Sa7ra)"], ["واحة", "Oasis"]],
+        [["برق", "Éclair (Berq)"], ["رعد", "Tonnerre (R3ad)"]],
+        [["سحاب", "Nuages (S7ab)"], ["ضباب", "Brouillard (Dbeb)"]]
+      ],
+      words: [
+        ["سلحفاة", "Tortue (Fekroun)"], ["قنفذ", "Hérisson (Gounfoud)"], ["زرافة", "Girafe"],
+        ["حمار وحشي", "Zèbre"], ["طاووس", "Paon"], ["لقلاق", "Cigogne (Bellaredj)"],
+        ["حمامة", "Pigeon (7mama)"], ["عصفور", "Oiseau (Ferkhel)"], ["خفاش", "Chauve-souris"],
+        ["قنديل البحر", "Méduse"], ["سلطعون", "Crabe"], ["نجمة البحر", "Étoile de mer"],
+        ["شجرة", "Arbre (Chjra)"], ["غابة", "Forêt"], ["جزيرة", "Île"], ["كهف", "Grotte"]
+      ]
+    },
+    objects: {
+      name: "Objets du Quotidien",
+      desc: "Meubles, outils, vêtements, accessoires et commodités de la maison.",
+      pairs: [
+        [["مفتاح", "Clé (Sarout)"], ["قفل", "Cadenas / Serrure (Qfel)"]],
+        [["ساعة يد", "Montre (Mangana)"], ["منبه", "Réveil matin"]],
+        [["كتاب", "Livre (Ktab)"], ["دفتر", "Cahier de notes (Daftar)"]],
+        [["قلم جاف", "Stylo à bille (Stylo)"], ["قلم رصاص", "Crayon à papier"]],
+        [["هاتف", "Téléphone portable (Portable)"], ["لوحة إلكترونية", "Tablette tactile"]],
+        [["سكين", "Couteau (Mous)"], ["مقص", "Ciseaux (Mqess)"]],
+        [["شوكة", "Fourchette (Forchita)"], ["ملعقة", "Cuillère (M3elqa)"]],
+        [["صحن", "Assiette (Tebsil)"], ["زلافة", "Bol en céramique (Zlafa)"]],
+        [["كأس", "Verre (Kass)"], ["فنجان", "Tasse à café (Fenjan)"]],
+        [["مرآة", "Miroir (Mraya)"], ["نافذة", "Fenêtre (Serjem)"]],
+        [["باب", "Porte (Bab)"], ["بوابة", "Portail / Grille"]],
+        [["كرسي", "Chaise (Koursi)"], ["أريكة", "Canapé / Seddari"]],
+        [["سرير", "Lit (Frach / Namoussiya)"], ["وسادة", "Oreiller (Mkhadda)"]],
+        [["طاولة", "Table (Tabla)"], ["مكتب", "Bureau de travail"]],
+        [["حقيبة يد", "Sac à main (Sacoche)"], ["محفظة جيب", "Portefeuille (Bztam)"]],
+        [["مصباح", "Lampe électrique (Bwila)"], ["شمعة", "Bougie (Chem3a)"]],
+        [["قميص", "Chemise habillée (Qamija)"], ["تيشيرت", "T-shirt décontracté"]],
+        [["سروال", "Pantalon (Serwal)"], ["شورت", "Short de sport"]],
+        [["حذاء", "Chaussures (Sbbat)"], ["جورب", "Chaussettes (Tqacher)"]],
+        [["قبعة", "Casquette (Kaskita)"], ["بونيه", "Bonnet d'hiver"]],
+        [["نظارات شمسية", "Lunettes de soleil"], ["نظارات طبية", "Lunettes de vue"]],
+        [["خاتم", "Bague (Khatem)"], ["سوار", "Bracelet (Demlej)"]],
+        [["قلادة", "Collier (Snsla)"], ["أقراط", "Boucles d'oreilles"]],
+        [["صابون", "Savon (Saboun)"], ["شامبو", "Shampoing pour cheveux"]],
+        [["فرشاة أسنان", "Brosse à dents"], ["معجون أسنان", "Dentifrice"]],
+        [["منشفة", "Serviette (Fota)"], ["رداء حمام", "Peignoir de bain"]],
+        [["مكواة", "Fer à repasser (Maslou7)"], ["غسالة ملابس", "Machine à laver"]],
+        [["مكنسة", "Balai (Chtaba)"], ["مكنسة كهربائية", "Aspirateur"]],
+        [["مظلة", "Parapluie (Mdel)"], ["معطف مطري", "Imperméable"]],
+        [["ولاعة", "Briquet (Brika)"], ["علبة كبريت", "Allumettes (Lweqid)"]]
+      ],
+      words: [
+        ["شاحن", "Chargeur de batterie"], ["بطارية", "Batterie portable"], ["سماعات", "Écouteurs"],
+        ["مروحة", "Ventilateur"], ["مكيف", "Climatiseur"], ["سخان", "Chauffe-eau"],
+        ["سجادة", "Tapis (Zrabia)"], ["ستارة", "Rideau (Khamia)"], ["ثلاجة", "Réfrigérateur (Frigo)"],
+        ["فرن", "Four de cuisine (Ferran)"], ["مطرقة", "Marteau"], ["مفك براغي", "Tournevis"],
+        ["حبل", "Corde solide (7bel)"], ["شريط لاصق", "Scotch adhésif"], ["إبرة وخيط", "Aiguille et fil"]
+      ]
+    },
+    places: {
+      name: "Lieux, Villes & Voyages",
+      desc: "Villes touristiques, monuments, transports et infrastructures.",
+      pairs: [
+        [["مطار", "Aéroport international"], ["محطة قطار", "Gare ferroviaire (Lagare)"]],
+        [["طائرة", "Avion de ligne (Tiyara)"], ["صاروخ", "Fusée spatiale"]],
+        [["قطار", "Train rapide (Tran)"], ["ترامواي", "Tramway urbain"]],
+        [["سفينة", "Paquebot de croisière"], ["قارب صيد", "Barque de pêche"]],
+        [["سيارة", "Voiture (Tomobil)"], ["دراجة نارية", "Moto (Motor)"]],
+        [["حافلة", "Bus de ville (Toubis)"], ["شاحنة", "Camion de transport (Kamio)"]],
+        [["مستشفى", "Hôpital général (Sbitar)"], ["صيدلية", "Pharmacie (Farmasian)"]],
+        [["مدرسة", "École primaire (Madrassa)"], ["جامعة", "Université (Jami3a)"]],
+        [["مسجد", "Mosquée (Jame3)"], ["كنيسة", "Église (Knisa)"]],
+        [["سوق تجاري", "Centre commercial (Mall)"], ["متجر حي", "Épicerie locale (Hanout)"]],
+        [["مطعم", "Restaurant (Resto)"], ["مقهى", "Café (Gahwa)"]],
+        [["شاطئ", "Plage de sable (Plage)"], ["مسبح", "Piscine municipale"]],
+        [["فندق", "Hôtel de luxe (Otel)"], ["مخيم", "Camping sous tente"]],
+        [["ملعب كرة قدم", "Stade de football (Terrain)"], ["قاعة رياضة", "Salle de sport (Gym)"]],
+        [["سينما", "Salle de cinéma"], ["مسرح", "Théâtre classique"]],
+        [["متحف", "Musée d'histoire"], ["معرض فني", "Galerie d'art"]],
+        [["حديقة عمومية", "Jardin public / Parc"], ["غابة", "Forêt naturelle"]],
+        [["مكتبة عمومية", "Bibliothèque publique"], ["مكتب بريد", "Bureau de poste (La poste)"]],
+        [["بنك", "Banque (Bank)"], ["صراف آلي", "Distributeur de billets (Guichet)"]],
+        [["محطة بنزين", "Station service (Pompiste)"], ["موقف سيارات", "Parking payant"]],
+        [["ميناء", "Port maritime"], ["محطة بحرية", "Gare maritime"]],
+        [["جسر", "Pont suspendu (Qantara)"], ["نفق", "Tunnel sous la montagne"]],
+        [["قلعة تاريخية", "Château fort / Forteresse"], ["قصر ملكي", "Palais royal"]],
+        [["أهرامات", "Pyramides d'Égypte"], ["برج إيفل", "Tour Eiffel de Paris"]],
+        [["حي شعبي", "Quartier populaire"], ["حي راقي", "Quartier résidentiel"]],
+        [["سفارة", "Ambassade diplomatique"], ["قنصلية", "Consulat général"]]
+      ],
+      words: [
+        ["مراكش", "Marrakech"], ["الدار البيضاء", "Casablanca (Casa)"], ["طنجة", "Tanger"],
+        ["فاس", "Fès"], ["أكادير", "Agadir"], ["الرباط", "Rabat"], ["باريس", "Paris"],
+        ["دبي", "Dubaï"], ["مكة المكرمة", "La Mecque"], ["إسطنبول", "Istanbul"],
+        ["جواز سفر", "Passeport biométrique"], ["تذكرة سفر", "Billet d'embarquement"],
+        ["حقيبة سفر", "Valise à roulettes"], ["نقطة تفتيش", "Poste frontière / Douane"]
+      ]
+    },
+    roles: {
+      name: "Métiers & Personnages",
+      desc: "Professions, corps de métier, forces de l'ordre et archétypes.",
+      pairs: [
+        [["طبيب", "Médecin généraliste (Tbib)"], ["ممرض", "Infirmier soignant (Fermli)"]],
+        [["طبيب أسنان", "Chirurgien dentiste"], ["طبيب عيون", "Médecin ophtalmologue"]],
+        [["أستاذ", "Professeur / Enseignant (Oustad)"], ["مدير مدرسة", "Directeur d'établissement"]],
+        [["طباخ", "Chef cuisinier (Chaf)"], ["نادل", "Serveur de restaurant (Garçon)"]],
+        [["شرطي", "Agent de police (Boulisi)"], ["دركي", "Gendarme (Jadarmi)"]],
+        [["جندي", "Soldat militaire (3eskri)"], ["حارس أمن", "Agent de sécurité privée"]],
+        [["رجل إطفاء", "Sapeur-pompier (Pompia)"], ["مسعف", "Ambulancier secouriste"]],
+        [["مهندس مدني", "Ingénieur en travaux"], ["مهندس معماري", "Architecte concepteur"]],
+        [["طيار", "Pilote de ligne (Tayar)"], ["مضيف طيران", "Steward / Hôtesse de l'air"]],
+        [["قبطان سفينة", "Capitaine de navire"], ["بحار", "Marin pêcheur"]],
+        [["قاضي", "Juge de tribunal (Qadi)"], ["محامي", "Avocat au barreau (Mo7ami)"]],
+        [["فلاح", "Agriculteur (Fella7)"], ["راعي غنم", "Berger de troupeau (Sarrah)"]],
+        [["نجار", "Menuisier artisan (Najjar)"], ["حداد", "Artisan forgeron (Haddad)"]],
+        [["بناء", "Maçon en bâtiment (Bennay)"], ["صباغ", "Peintre en bâtiment (Sebbagh)"]],
+        [["ميكانيكي", "Mécanicien auto (Mikanik)"], ["كهربائي", "Électricien (Tricissian)"]],
+        [["حلاق", "Barbier / Coiffeur (7ellaq)"], ["خياط", "Tailleur / Couturier (Khiyat)"]],
+        [["ممثل", "Acteur de cinéma (Moumathel)"], ["مخرج", "Réalisateur de film"]],
+        [["مغني", "Chanteur d'opéra/pop (Moghanni)"], ["موسيقي", "Compositeur musicien"]],
+        [["كاتب", "Écrivain / Romancier"], ["صحفي", "Journaliste d'investigation (Sa7afi)"]],
+        [["لاعب كرة قدم", "Footballeur professionnel"], ["مدرب فريق", "Entraîneur / Coach sportif"]],
+        [["ملك", "Roi souverain (Malik)"], ["رئيس دولة", "Président de la République"]],
+        [["وزير", "Ministre de gouvernement"], ["والي", "Gouverneur / Wali de région"]],
+        [["ساحر", "Illusionniste / Magicien"], ["مهرج", "Clown de cirque"]],
+        [["جاسوس", "Agent secret infiltré"], ["محقق خاص", "Détective privé"]],
+        [["سارق", "Voleur rusé (Cheffar)"], ["حارس ليلي", "Gardien de nuit (3assas)"]]
+      ],
+      words: [
+        ["صيدلي", "Pharmacien d'officine"], ["مصور", "Photographe reporter"], ["عالم فضاء", "Astronaute explorateur"],
+        ["غواص", "Plongeur sous-marin"], ["مترجم", "Traducteur d'ambassade"], ["حكم مباراة", "Arbitre officiel"],
+        ["سائق طاكسي", "Chauffeur de taxi"], ["بقال", "Épicier d'angle (Beqqal)"], ["جزار", "Artisan boucher (Gezzar)"],
+        ["سماك", "Marchand de poisson"], ["خضار", "Marchand de fruits et légumes"], ["طالب", "Étudiant universitaire"]
+      ]
+    },
+    culture: {
+      name: "Loisirs, Sport & Pop Culture",
+      desc: "Disciplines sportives, instruments, jeux, cinéma et arts de scène.",
+      pairs: [
+        [["كرة القدم", "Football (Ballon rond)"], ["كرة السلة", "Basketball"]],
+        [["تنس", "Tennis de court"], ["كرة الطائرة", "Volleyball de plage"]],
+        [["سباحة", "Natation en brasse (3ouma)"], ["غطس", "Plongée en profondeur"]],
+        [["ماراثون", "Course d'endurance / Marathon"], ["مشي رياضي", "Marche athlétique"]],
+        [["ملاكمة", "Boxe anglaise"], ["كاراتيه", "Arts martiaux / Karaté"]],
+        [["شطرنج", "Échecs stratégiques"], ["ضامة", "Jeu de dames classique"]],
+        [["ورق لعب", "Cartes à jouer (Ronda / Carta)"], ["دومينو", "Dominos de salon"]],
+        [["بلايستيشن", "PlayStation / Console de jeux"], ["حاسوب ألعاب", "PC Gamer"]],
+        [["فيلم رعب", "Film d'horreur épouvante"], ["فيلم أكشن", "Film d'action explosif"]],
+        [["كوميديا", "Spectacle humoristique"], ["دراما", "Série télévisée dramatique"]],
+        [["غيتار", "Guitare acoustique"], ["عود", "Luth oriental (Oud)"]],
+        [["بيانو", "Piano à queue"], ["كمنجة", "Violon soliste (Kamanja)"]],
+        [["دربوكة", "Derbouka orientale"], ["بندير", "Tambourin marocain (Bendira)"]],
+        [["رسم زيتي", "Peinture sur toile"], ["نحت", "Sculpture en marbre"]],
+        [["تصوير فوتوغرافي", "Photographie argentique"], ["رسم كاريكاتير", "Bande dessinée / Manga"]],
+        [["رقص شرقي", "Danse traditionnelle"], ["بريك دانس", "Breakdance / Hip-Hop"]],
+        [["تسلق جبال", "Escalade de falaise"], ["تزلج على الجليد", "Ski alpin sur neige"]],
+        [["صيد سمك", "Pêche à la ligne"], ["صيد بري", "Chasse à courre"]],
+        [["سيرك", "Cirque ambulant"], ["حديقة ملاهي", "Parc d'attractions"]],
+        [["حفلة زفاف", "Fête de mariage (3ers)"], ["عيد ميلاد", "Fête d'anniversaire"]],
+        [["مسابقة غناء", "Concours de chant / The Voice"], ["مباراة كلاسيكو", "El Clásico (Real vs Barça)"]],
+        [["بطل خارق", "Super-héros justicier"], ["شرير الفيلم", "Super-vilain légendaire"]]
+      ],
+      words: [
+        ["يوتيوب", "YouTube"], ["تيك توك", "TikTok"], ["نتفليكس", "Netflix"],
+        ["بودكاست", "Émission podcast"], ["ميكروفون", "Microphone de karaoké"], ["ميدالية ذهبية", "Médaille d'or olympique"],
+        ["كأس العالم", "Trophée de la Coupe du Monde"], ["أولمبياد", "Jeux Olympiques"], ["تذكرة سينما", "Ticket de cinéma"],
+        ["أغنية راب", "Morceau de rap"], ["شعر وزجل", "Poésie lyrique / Zajal"], ["مسرحية كوميدية", "Comédie théâtrale"]
+      ]
+    },
+    tech: {
+      name: "High-Tech & Geek",
+      desc: "Gadgets, smartphones, applications, intelligence artificielle et web.",
+      pairs: [
+        [["حاسوب محمول", "Ordinateur portable (Laptop)"], ["حاسوب مكتبي", "Poste informatique fixe (Desktop)"]],
+        [["هاتف ذكي", "Smartphone moderne"], ["هاتف قديم", "Téléphone vintage (Nokia 3310)"]],
+        [["آيفون", "iPhone (Apple iOS)"], ["سامسونغ", "Samsung Galaxy (Android)"]],
+        [["شبكة واي فاي", "Connexion Wi-Fi"], ["بيانات جوالة", "Réseau mobile 4G / 5G"]],
+        [["واتساب", "WhatsApp messagerie"], ["إنستغرام", "Instagram stories"]],
+        [["فيسبوك", "Facebook"], ["تويتر / إكس", "Twitter / Plateforme X"]],
+        [["لوحة مفاتيح", "Clavier rétroéclairé"], ["فأرة حاسوب", "Souris ergonomique"]],
+        [["شاشة تلفاز", "Télévision grand écran"], ["مسلاط ضوئي", "Projecteur vidéo HD"]],
+        [["قرص صلب", "Disque SSD externe"], ["فلاش ديسك", "Clé USB de stockage"]],
+        [["كاميرا احترافية", "Appareil photo reflex"], ["طائرة درون", "Drone téléguidé avec caméra"]],
+        [["ذكاء اصطناعي", "Intelligence Artificielle (ChatGPT)"], ["روبوت آلي", "Robot humanoïde autonome"]],
+        [["موقع إلكتروني", "Site internet officiel"], ["تطبيق هاتف", "Application mobile native"]],
+        [["كلمة سر", "Mot de passe sécurisé"], ["بصمة رقمية", "Biométrie / Face ID"]],
+        [["قرصان معلوماتي", "Hacker pirate"], ["خبير أمن سيبراني", "Spécialiste Cybersécurité"]],
+        [["لعبة فورتنايت", "Jeu Fortnite"], ["لعبة فري فاير", "Free Fire / Battle Royale"]],
+        [["نظارات واقع افتراضي", "Casque VR immersif"], ["نظارات ذكية", "Smart Glasses connectées"]],
+        [["سماعات بلوتوث", "AirPods sans fil"], ["مكبر صوت لاسلكي", "Enceinte Bluetooth nomade"]]
+      ],
+      words: [
+        ["شاحن سريع", "Chargeur rapide USB-C"], ["باور بانك", "Batterie externe (Powerbank)"],
+        ["كابل شحن", "Câble tressé"], ["ألياف بصرية", "Fibre optique ultra-rapide"],
+        ["خوارزمية", "Algorithme de calcul"], ["بيتكوين", "Bitcoin & Cryptomonnaie"],
+        ["ستريمر", "Streamer de jeux (Twitch)"], ["سيرفر سحابي", "Serveur Cloud distant"], ["فيروس إلكتروني", "Virus informatique"]
+      ]
+    }
+  };
 
-  // ---- Close word-pairs bank (for "Mot proche" mode) ----
-  // Each entry: [ [ar, en] majority word, [ar, en] impostor word ]
-  const PAIRS = [
-    [["قهوة","Coffee"],["شاي","Tea"]],
-    [["عصير","Juice"],["مشروب غازي","Soda"]],
-    [["خبز","Bread"],["كعك","Cake"]],
-    [["جبن","Cheese"],["زبدة","Butter"]],
-    [["تفاحة","Apple"],["كمثرى","Pear"]],
-    [["برتقال","Orange"],["ليمون","Lemon"]],
-    [["عسل","Honey"],["سكر","Sugar"]],
-    [["حليب","Milk"],["لبن","Yogurt"]],
-    [["تمر","Dates"],["زبيب","Raisins"]],
-    [["بطيخ","Watermelon"],["شمام","Cantaloupe"]],
-    [["أسد","Lion"],["نمر","Tiger"]],
-    [["ذئب","Wolf"],["كلب","Dog"]],
-    [["حصان","Horse"],["حمار","Donkey"]],
-    [["جمل","Camel"],["حصان","Horse"]],
-    [["أرنب","Rabbit"],["فأر","Mouse"]],
-    [["نسر","Eagle"],["صقر","Falcon"]],
-    [["سمكة","Fish"],["قرش","Shark"]],
-    [["فيل","Elephant"],["وحيد القرن","Rhino"]],
-    [["دجاجة","Chicken"],["ديك","Rooster"]],
-    [["مدرسة","School"],["جامعة","University"]],
-    [["مسجد","Mosque"],["كنيسة","Church"]],
-    [["مطار","Airport"],["محطة قطار","Train station"]],
-    [["مستشفى","Hospital"],["صيدلية","Pharmacy"]],
-    [["سوق","Market"],["مول","Mall"]],
-    [["شاطئ","Beach"],["بحيرة","Lake"]],
-    [["صحراء","Desert"],["واحة","Oasis"]],
-    [["جبل","Mountain"],["تل","Hill"]],
-    [["مطعم","Restaurant"],["مقهى","Café"]],
-    [["حديقة","Garden"],["غابة","Forest"]],
-    [["مفتاح","Key"],["قفل","Lock"]],
-    [["ساعة","Watch"],["منبه","Alarm clock"]],
-    [["كتاب","Book"],["مجلة","Magazine"]],
-    [["هاتف","Phone"],["حاسوب لوحي","Tablet"]],
-    [["سكين","Knife"],["مقص","Scissors"]],
-    [["مرآة","Mirror"],["نافذة","Window"]],
-    [["حقيبة","Bag"],["محفظة","Wallet"]],
-    [["مصباح","Lamp"],["شمعة","Candle"]],
-    [["سيارة","Car"],["دراجة نارية","Motorcycle"]],
-    [["كرسي","Chair"],["أريكة","Sofa"]],
-    [["شمس","Sun"],["قمر","Moon"]],
-    [["مطر","Rain"],["ثلج","Snow"]],
-    [["بحر","Sea"],["محيط","Ocean"]],
-    [["ريح","Wind"],["عاصفة","Storm"]],
-    [["نار","Fire"],["دخان","Smoke"]],
-    [["سحاب","Clouds"],["ضباب","Fog"]],
-    [["برق","Lightning"],["رعد","Thunder"]],
-    [["نجمة","Star"],["كوكب","Planet"]],
-    [["زلزال","Earthquake"],["بركان","Volcano"]],
-    [["شلال","Waterfall"],["نهر","River"]],
-    [["طبيب","Doctor"],["ممرض","Nurse"]],
-    [["معلم","Teacher"],["مدير مدرسة","Principal"]],
-    [["طباخ","Chef"],["نادل","Waiter"]],
-    [["شرطي","Police officer"],["جندي","Soldier"]],
-    [["مهندس","Engineer"],["معماري","Architect"]],
-    [["فلاح","Farmer"],["صياد","Fisherman"]],
-    [["ممثل","Actor"],["مخرج","Director"]],
-    [["طيار","Pilot"],["كابتن سفينة","Ship captain"]],
-    [["نجار","Carpenter"],["حداد","Blacksmith"]],
-    [["محامي","Lawyer"],["قاضي","Judge"]],
-    [["حب","Love"],["صداقة","Friendship"]],
-    [["خوف","Fear"],["قلق","Anxiety"]],
-    [["فرح","Joy"],["سعادة","Happiness"]],
-    [["غضب","Anger"],["إحباط","Frustration"]],
-    [["سلام","Peace"],["حرية","Freedom"]],
-    [["أمل","Hope"],["ثقة","Trust"]],
-    [["حزن","Sadness"],["وحدة","Loneliness"]],
-    [["شجاعة","Courage"],["قوة","Strength"]],
-    [["حظ","Luck"],["قدر","Destiny"]],
-    [["صبر","Patience"],["توازن","Balance"]],
-    [["كرة القدم","Football"],["كرة السلة","Basketball"]],
-    [["سباحة","Swimming"],["غوص","Diving"]],
-    [["جري","Running"],["مشي","Walking"]],
-    [["رقص","Dancing"],["غناء","Singing"]],
-    [["قراءة","Reading"],["كتابة","Writing"]],
-    [["تسلق","Climbing"],["مشي في الجبال","Hiking"]],
-    [["شطرنج","Chess"],["ورق لعب","Cards"]],
-    [["سفر","Traveling"],["رحلة","Trip"]],
-    [["قميص","Shirt"],["جاكيت","Jacket"]],
-    [["حذاء","Shoe"],["جورب","Sock"]],
-    [["قبعة","Hat"],["وشاح","Scarf"]],
-    [["فستان","Dress"],["تنورة","Skirt"]],
-    [["خاتم","Ring"],["سوار","Bracelet"]],
-    [["نظارة","Glasses"],["نظارة شمسية","Sunglasses"]],
-    [["حاسوب","Computer"],["هاتف","Phone"]],
-    [["كاميرا","Camera"],["شاشة","Screen"]],
-    [["طابعة","Printer"],["ماسح ضوئي","Scanner"]],
-    [["سماعة","Headphones"],["ميكروفون","Microphone"]],
-    [["إنترنت","Internet"],["شبكة","Network"]],
-    [["طائرة","Airplane"],["صاروخ","Rocket"]],
-    [["قطار","Train"],["مترو","Metro"]],
-    [["سفينة","Ship"],["قارب","Boat"]],
-    [["حافلة","Bus"],["شاحنة","Truck"]],
-    [["دراجة","Bicycle"],["دراجة نارية","Motorcycle"]],
-    [["أم","Mother"],["جدة","Grandmother"]],
-    [["أب","Father"],["جد","Grandfather"]],
-    [["أخ","Brother"],["أخت","Sister"]],
-    [["صديق","Friend"],["جار","Neighbor"]],
-    [["ملك","King"],["ملكة","Queen"]],
-    [["فرعون","Pharaoh"],["ملك","King"]],
-    [["هرم","Pyramid"],["قلعة","Castle"]],
-    [["سيف","Sword"],["درع","Shield"]],
-    [["تنين","Dragon"],["أسطورة","Legend/Myth"]],
-    [["جندي","Soldier"],["فارس","Knight"]],
-    [["صباح","Morning"],["مساء","Evening"]],
-    [["يوم","Day"],["ليل","Night"]],
-    [["أسبوع","Week"],["شهر","Month"]],
-    [["عيد","Holiday"],["عطلة","Vacation"]],
-    [["ماضي","Past"],["مستقبل","Future"]]
+  function getThemePairs(themeKey) {
+    if (themeKey !== 'all' && THEMES[themeKey]) {
+      return THEMES[themeKey].pairs;
+    }
+    const all = [];
+    Object.values(THEMES).forEach(t => all.push(...t.pairs));
+    return all;
+  }
+
+  function getThemeWords(themeKey) {
+    if (themeKey !== 'all' && THEMES[themeKey]) {
+      const list = [...THEMES[themeKey].words];
+      THEMES[themeKey].pairs.forEach(([w1, w2]) => {
+        list.push(w1, w2);
+      });
+      return list;
+    }
+    const all = [];
+    Object.values(THEMES).forEach(t => {
+      all.push(...t.words);
+      t.pairs.forEach(([w1, w2]) => all.push(w1, w2));
+    });
+    return all;
+  }
+
+  // ---- Web Audio API Synthesizer (100% Offline, Zero External Assets) ----
+  let audioCtx = null;
+  let sfxEnabled = true;
+
+  function initAudio(){
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) audioCtx = new AudioContextClass();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playSfx(type){
+    if (!sfxEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+
+      if (type === 'click') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(540, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.04);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } else if (type === 'stamp') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(35, now + 0.22);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      } else if (type === 'flip') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(260, now);
+        osc.frequency.exponentialRampToValueAtTime(520, now + 0.12);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'win') {
+        [392, 523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.1);
+          gain.gain.setValueAtTime(0.18, now + i * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.1);
+          osc.stop(now + i * 0.1 + 0.35);
+        });
+      } else if (type === 'alert') {
+        [220, 180].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + i * 0.12);
+          gain.gain.setValueAtTime(0.16, now + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.12);
+          osc.stop(now + i * 0.12 + 0.2);
+        });
+      } else if (type === 'alarm') {
+        [440, 350, 440, 350].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + i * 0.15);
+          gain.gain.setValueAtTime(0.18, now + i * 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.14);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.15);
+          osc.stop(now + i * 0.15 + 0.14);
+        });
+      }
+    } catch(e){}
+  }
+
+  // Spy aliases & avatars
+  const SPY_CODENAMES = [
+    "Cobra", "Faucon", "Ombre", "Mirage", "Spectre",
+    "Lynx", "Phénix", "Tigre", "Vipère", "Aigle",
+    "Fantôme", "Corbeau", "Scorpion", "Jaguar", "Condor",
+    "Orion", "Titan", "Vortex", "Saphir", "Tempête"
+  ];
+  const SPY_AVATARS = [
+    "🕵️", "🕶️", "💼", "🦅", "🎯", "⚡", "🔍", "🗝️", "♟️", "🗡️",
+    "📡", "🎲", "🐺", "🛡️", "🔥", "🔮", "🎩", "⚓", "👑", "🚀"
   ];
 
   // ---- State ----
   let numPlayers = 6;
-  let numImpostors = 1;      // used in single-role modes (blank / pair)
-  let numMrWhite = 1;        // used in mix mode
-  let numUndercover = 1;     // used in mix mode
+  let numImpostors = 1;
+  let numMrWhite = 1;
+  let numUndercover = 1;
   let gameMode = 'blank';    // 'blank' | 'pair' | 'mix'
-  let secretWord = null;     // [ar, en] shown to civils
-  let impostorWord = null;   // [ar, en] shown to undercover/pair-impostor, null if not used
-  let roles = [];            // array of 'civil' | 'white' | 'undercover'
+  let selectedTheme = 'all';
+  let nameMode = 'nums';     // 'nums' | 'codes' | 'custom'
+  let customNames = [];
+  let secretWord = null;     // [ar, fr]
+  let impostorWord = null;   // [ar, fr]
+  let players = [];          // Array of player objects
   let currentIndex = 0;
+  let activeSuspectIndex = 0;
+  let firstSpeakerIndex = 0;
+  let isGameOver = false;
+
+  // Timer state
+  let timerDuration = 90;
+  let timerRemaining = 90;
+  let timerInterval = null;
+  let timerRunning = false;
 
   // ---- Elements ----
   const el = id => document.getElementById(id);
@@ -683,6 +1590,13 @@
   const screenCard = el('screen-card');
   const screenEnd = el('screen-end');
   const screenVote = el('screen-vote');
+
+  const soundToggleBtn = el('soundToggleBtn');
+  const soundIcon = el('soundIcon');
+  const soundLabel = el('soundLabel');
+  const rulesBtn = el('rulesBtn');
+  const rulesModal = el('rulesModal');
+  const closeRulesBtn = el('closeRulesBtn');
 
   const playersCount = el('playersCount');
   const playersVal = el('playersVal');
@@ -695,20 +1609,156 @@
   const undercoverCount = el('undercoverCount');
   const undercoverVal = el('undercoverVal');
   const mixSummary = el('mixSummary');
+  const themeSelect = el('themeSelect');
+  const themeVal = el('themeVal');
+  const themeNote = el('themeNote');
+  const recapTheme = el('recapTheme');
+
+  const nameModeNums = el('nameModeNums');
+  const nameModeCodes = el('nameModeCodes');
+  const nameModeCustom = el('nameModeCustom');
+  const customNamesBox = el('customNamesBox');
+
+  const optFirstCivil = el('optFirstCivil');
+  const timerSelect = el('timerSelect');
+  const optHoldPeek = el('optHoldPeek');
+
+  const passProgressDots = el('passProgressDots');
+  const passAgentNo = el('passAgentNo');
+  const passName = el('passName');
+  const passHint = el('passHint');
+  const revealBtn = el('revealBtn');
+
+  const fileCard = el('fileCard');
+  const cardBack = el('cardBack');
+  const cardRoleLabel = el('cardRoleLabel');
+  const cardWord = el('cardWord');
+  const cardTranslit = el('cardTranslit');
+  const cardTapHint = el('cardTapHint');
+  const cardHoldHint = el('cardHoldHint');
+  const nextPlayerBtn = el('nextPlayerBtn');
+
+  const speakerName = el('speakerName');
+  const timerBox = el('timerBox');
+  const timerClock = el('timerClock');
+  const timerToggleBtn = el('timerToggleBtn');
+  const timerResetBtn = el('timerResetBtn');
+  const victoryBanner = el('victoryBanner');
+  const victoryStamp = el('victoryStamp');
+  const victoryTitle = el('victoryTitle');
+  const victorySub = el('victorySub');
+  const countLivingCivils = el('countLivingCivils');
+  const countLivingImposters = el('countLivingImposters');
+  const suspectsGrid = el('suspectsGrid');
+
+  const voteSuspectTitle = el('voteSuspectTitle');
+  const voteCard = el('voteCard');
+  const voteCardWord = el('voteCardWord');
+  const whiteGuessBox = el('whiteGuessBox');
+  const whiteGuessInput = el('whiteGuessInput');
+  const whiteGuessSubmit = el('whiteGuessSubmit');
+  const whiteGuessFeedback = el('whiteGuessFeedback');
+  const whiteGuessManualWrap = el('whiteGuessManualWrap');
+  const whiteGuessYes = el('whiteGuessYes');
+  const whiteGuessNo = el('whiteGuessNo');
+  const confirmEliminateBtn = el('confirmEliminateBtn');
+
+  // Peek word elements
+  const topPeekBtn = el('topPeekBtn');
+  const peekModal = el('peekModal');
+  const peekWordBtn = el('peekWordBtn');
+  const peekPlayerSelect = el('peekPlayerSelect');
+  const peekCard = el('peekCard');
+  const peekCardBack = el('peekCardBack');
+  const peekCardLabel = el('peekCardLabel');
+  const peekCardWord = el('peekCardWord');
+  const peekCardTranslit = el('peekCardTranslit');
+  const peekTapHint = el('peekTapHint');
+  const peekHoldHint = el('peekHoldHint');
+  const closePeekBtn = el('closePeekBtn');
 
   function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-
   function maxImpostorsFor(players){ return Math.max(1, players - 2); }
+
+  // Sound toggle
+  soundToggleBtn.addEventListener('click', () => {
+    initAudio();
+    sfxEnabled = !sfxEnabled;
+    soundIcon.textContent = sfxEnabled ? '🔊' : '🔇';
+    soundLabel.textContent = sfxEnabled ? 'SON: ACTIF' : 'SON: COUPÉ';
+    soundToggleBtn.classList.toggle('active', sfxEnabled);
+    if (sfxEnabled) playSfx('click');
+  });
+
+  // Rules Modal
+  rulesBtn.addEventListener('click', () => {
+    playSfx('click');
+    rulesModal.classList.remove('hidden');
+  });
+  closeRulesBtn.addEventListener('click', () => {
+    playSfx('click');
+    rulesModal.classList.add('hidden');
+  });
+  rulesModal.addEventListener('click', (e) => {
+    if (e.target === rulesModal) rulesModal.classList.add('hidden');
+  });
+
+  // Name Mode Handling
+  function setNameMode(mode){
+    nameMode = mode;
+    nameModeNums.classList.toggle('active', mode === 'nums');
+    nameModeCodes.classList.toggle('active', mode === 'codes');
+    nameModeCustom.classList.toggle('active', mode === 'custom');
+    customNamesBox.classList.toggle('hidden', mode !== 'custom');
+    if (mode === 'custom') renderCustomNameInputs();
+    playSfx('click');
+  }
+  nameModeNums.addEventListener('click', () => setNameMode('nums'));
+  nameModeCodes.addEventListener('click', () => setNameMode('codes'));
+  nameModeCustom.addEventListener('click', () => setNameMode('custom'));
+
+  function renderCustomNameInputs(){
+    customNamesBox.innerHTML = '';
+    for (let i = 0; i < numPlayers; i++) {
+      const row = document.createElement('div');
+      row.className = 'name-input-row';
+      const label = document.createElement('span');
+      label.className = 'name-input-label';
+      label.textContent = `N°${i + 1} :`;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'name-input';
+      input.placeholder = `Agent ${i + 1}`;
+      input.value = customNames[i] || '';
+      input.addEventListener('input', (e) => {
+        customNames[i] = e.target.value.trim();
+      });
+      row.appendChild(label);
+      row.appendChild(input);
+      customNamesBox.appendChild(row);
+    }
+  }
+
+  function getPlayerDisplayName(i){
+    if (nameMode === 'custom' && customNames[i]) {
+      return customNames[i];
+    }
+    if (nameMode === 'codes') {
+      return `Agent ${SPY_CODENAMES[i % SPY_CODENAMES.length]}`;
+    }
+    return `Agent ${i + 1}`;
+  }
 
   function refreshSetupUI(){
     playersCount.textContent = numPlayers;
     playersVal.textContent = numPlayers;
 
+    if (nameMode === 'custom') renderCustomNameInputs();
+
     if (gameMode === 'mix') {
       const capTotal = maxImpostorsFor(numPlayers);
       numMrWhite = clamp(numMrWhite, 1, Math.max(1, capTotal - numUndercover));
       numUndercover = clamp(numUndercover, 1, Math.max(1, capTotal - numMrWhite));
-      // if still over cap after clamping order, trim mrWhite further
       while (numMrWhite + numUndercover > capTotal && numMrWhite > 1) numMrWhite--;
       while (numMrWhite + numUndercover > capTotal && numUndercover > 1) numUndercover--;
 
@@ -727,34 +1777,42 @@
 
   el('playersMinus').addEventListener('click', () => {
     numPlayers = clamp(numPlayers - 1, 3, 20);
+    playSfx('click');
     refreshSetupUI();
   });
   el('playersPlus').addEventListener('click', () => {
     numPlayers = clamp(numPlayers + 1, 3, 20);
+    playSfx('click');
     refreshSetupUI();
   });
   el('impMinus').addEventListener('click', () => {
     numImpostors = clamp(numImpostors - 1, 1, maxImpostorsFor(numPlayers));
+    playSfx('click');
     refreshSetupUI();
   });
   el('impPlus').addEventListener('click', () => {
     numImpostors = clamp(numImpostors + 1, 1, maxImpostorsFor(numPlayers));
+    playSfx('click');
     refreshSetupUI();
   });
   el('mrWhiteMinus').addEventListener('click', () => {
     numMrWhite = clamp(numMrWhite - 1, 1, 10);
+    playSfx('click');
     refreshSetupUI();
   });
   el('mrWhitePlus').addEventListener('click', () => {
     numMrWhite = clamp(numMrWhite + 1, 1, 10);
+    playSfx('click');
     refreshSetupUI();
   });
   el('undercoverMinus').addEventListener('click', () => {
     numUndercover = clamp(numUndercover - 1, 1, 10);
+    playSfx('click');
     refreshSetupUI();
   });
   el('undercoverPlus').addEventListener('click', () => {
     numUndercover = clamp(numUndercover + 1, 1, 10);
+    playSfx('click');
     refreshSetupUI();
   });
 
@@ -780,27 +1838,50 @@
         ? "L'imposteur ne reçoit aucun mot — il doit bluffer."
         : "L'imposteur reçoit un mot proche mais différent — plus dur à démasquer.";
     }
+    playSfx('click');
     refreshSetupUI();
   }
   modeBlankBtn.addEventListener('click', () => setMode('blank'));
   modePairBtn.addEventListener('click', () => setMode('pair'));
   modeMixBtn.addEventListener('click', () => setMode('mix'));
 
+  function refreshThemeUI(){
+    const t = THEMES[selectedTheme];
+    if (t) {
+      themeVal.textContent = t.name;
+      const pCount = t.pairs.length;
+      const wCount = t.words.length + (t.pairs.length * 2);
+      themeNote.textContent = `${t.desc} (${pCount} paires et ${wCount} mots disponibles).`;
+    } else {
+      themeVal.textContent = 'Tous les thèmes';
+      const allP = getThemePairs('all').length;
+      const allW = getThemeWords('all').length;
+      themeNote.textContent = `Dossier complet mélangé : ${allP} paires et ${allW} mots disponibles.`;
+    }
+  }
+  themeSelect.addEventListener('change', () => {
+    selectedTheme = themeSelect.value;
+    playSfx('click');
+    refreshThemeUI();
+  });
+
   refreshSetupUI();
+  refreshThemeUI();
 
   function pickWord(){
-    return WORDS[Math.floor(Math.random() * WORDS.length)];
+    const list = getThemeWords(selectedTheme);
+    return list[Math.floor(Math.random() * list.length)];
   }
 
   function pickPair(){
-    return PAIRS[Math.floor(Math.random() * PAIRS.length)];
+    const list = getThemePairs(selectedTheme);
+    return list[Math.floor(Math.random() * list.length)];
   }
 
   function buildRoles(){
     const arr = new Array(numPlayers).fill('civil');
     if (gameMode === 'mix') {
       const idxs = [...Array(numPlayers).keys()];
-      // shuffle
       for (let i = idxs.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
@@ -824,92 +1905,553 @@
     target.classList.remove('hidden');
   }
 
+  // ---- Launch Mission ----
   el('startBtn').addEventListener('click', () => {
+    initAudio();
+    playSfx('stamp');
+
     if (gameMode === 'pair' || gameMode === 'mix') {
       const pair = pickPair();
-      secretWord = pair[0];
-      impostorWord = pair[1];
+      const flip = Math.random() < 0.5;
+      secretWord = flip ? pair[1] : pair[0];
+      impostorWord = flip ? pair[0] : pair[1];
     } else {
       secretWord = pickWord();
       impostorWord = null;
     }
-    roles = buildRoles();
+
+    const rolesArr = buildRoles();
+    players = [];
+    for (let i = 0; i < numPlayers; i++) {
+      players.push({
+        index: i,
+        number: i + 1,
+        name: getPlayerDisplayName(i),
+        codename: SPY_CODENAMES[i % SPY_CODENAMES.length],
+        avatar: SPY_AVATARS[i % SPY_AVATARS.length],
+        role: rolesArr[i],
+        isEliminated: false
+      });
+    }
+
+    // Select first speaker (Fair-play rule)
+    if (optFirstCivil.checked) {
+      const civilPlayers = players.filter(p => p.role === 'civil');
+      if (civilPlayers.length > 0) {
+        const chosen = civilPlayers[Math.floor(Math.random() * civilPlayers.length)];
+        firstSpeakerIndex = chosen.index;
+      } else {
+        const nonWhite = players.filter(p => p.role !== 'white');
+        const chosen = nonWhite.length > 0 ? nonWhite[Math.floor(Math.random() * nonWhite.length)] : players[0];
+        firstSpeakerIndex = chosen.index;
+      }
+    } else {
+      firstSpeakerIndex = Math.floor(Math.random() * numPlayers);
+    }
+
+    isGameOver = false;
     currentIndex = 0;
+    timerDuration = parseInt(timerSelect.value, 10) || 0;
     goToPass();
   });
 
+  // ---- Pass-the-phone Screen ----
+  function renderProgressDots(){
+    passProgressDots.innerHTML = '';
+    for (let i = 0; i < numPlayers; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'p-dot';
+      if (i < currentIndex) dot.classList.add('done');
+      else if (i === currentIndex) dot.classList.add('current');
+      passProgressDots.appendChild(dot);
+    }
+  }
+
   function goToPass(){
     if (currentIndex >= numPlayers) {
-      goToEnd();
+      goToDiscussion();
       return;
     }
-    el('passAgentNo').textContent = `AGENT N°${currentIndex + 1} / ${numPlayers}`;
-    el('passName').textContent = 'Passez le téléphone';
+    const p = players[currentIndex];
+    renderProgressDots();
+    passAgentNo.textContent = `DOSSIER ${currentIndex + 1} / ${numPlayers}`;
+    passName.textContent = p.name;
+    passHint.textContent = `Passez l'appareil à ${p.name}. Assurez-vous que personne d'autre ne regarde.`;
+    revealBtn.textContent = `Je suis ${p.name} — Révéler mon dossier`;
     showScreen(screenPass);
   }
 
-  el('revealBtn').addEventListener('click', () => {
+  revealBtn.addEventListener('click', () => {
+    playSfx('flip');
     setupCard();
     showScreen(screenCard);
   });
 
+  // ---- Card Reveal Screen ----
   function setupCard(){
-    const card = el('fileCard');
-    card.classList.remove('flipped');
-    const back = el('cardBack');
-    const wordEl = el('cardWord');
-    const translitEl = el('cardTranslit');
-    back.classList.remove('blank');
+    fileCard.classList.remove('flipped', 'holding');
+    cardBack.classList.remove('blank');
+    const existingBar = cardBack.querySelector('.redact-bar');
+    if (existingBar) existingBar.remove();
 
-    const role = roles[currentIndex];
-    const existingBar = back.querySelector('.redact-bar');
+    const p = players[currentIndex];
+    const isHoldMode = optHoldPeek.checked;
+    cardHoldHint.classList.toggle('hidden', !isHoldMode);
+    cardTapHint.textContent = isHoldMode ? "Maintenez le doigt appuyé pour voir" : "Touchez la carte pour révéler";
 
-    if (role === 'white') {
-      back.classList.add('blank');
-      wordEl.textContent = 'AUCUN MOT — VOUS ÊTES MR. WHITE';
-      wordEl.classList.remove('ar');
-      translitEl.textContent = 'Bluffez. Écoutez les indices des autres et fondez-vous dans la masse.';
-      if (!existingBar) {
-        const bar = document.createElement('div');
-        bar.className = 'redact-bar';
-        back.appendChild(bar);
-      }
-    } else if (role === 'undercover') {
-      if (existingBar) existingBar.remove();
-      wordEl.classList.add('ar');
-      wordEl.textContent = impostorWord[0];
-      translitEl.textContent = `${impostorWord[1]} — vous êtes Undercover, mais chut.`;
+    if (p.role === 'white') {
+      cardBack.classList.add('blank');
+      cardRoleLabel.textContent = "DOSSIER CLASSIFIÉ";
+      cardWord.textContent = 'AUCUN MOT — VOUS ÊTES MR. WHITE';
+      cardWord.classList.remove('ar');
+      cardTranslit.textContent = 'Écoutez les indices des autres, déduisez le sujet et fondez-vous dans la masse.';
+      const bar = document.createElement('div');
+      bar.className = 'redact-bar';
+      cardBack.appendChild(bar);
+    } else if (p.role === 'undercover') {
+      cardRoleLabel.textContent = "VOTRE MOT SECRET";
+      cardWord.classList.add('ar');
+      cardWord.textContent = impostorWord[0];
+      cardTranslit.textContent = `${impostorWord[1]} — vous êtes Undercover, mais restez discret.`;
     } else {
-      if (existingBar) existingBar.remove();
-      wordEl.classList.add('ar');
-      wordEl.textContent = secretWord[0];
-      translitEl.textContent = secretWord[1];
+      cardRoleLabel.textContent = "VOTRE MOT SECRET";
+      cardWord.classList.add('ar');
+      cardWord.textContent = secretWord[0];
+      cardTranslit.textContent = secretWord[1];
     }
 
-    // one-time tap handler per card lifecycle
-    card.onclick = () => {
-      card.classList.add('flipped');
-    };
+    if (isHoldMode) {
+      fileCard.onclick = null;
+      const startHold = (e) => {
+        e.preventDefault();
+        playSfx('flip');
+        fileCard.classList.add('holding');
+      };
+      const endHold = (e) => {
+        e.preventDefault();
+        fileCard.classList.remove('holding');
+      };
+      fileCard.onmousedown = startHold;
+      fileCard.onmouseup = endHold;
+      fileCard.onmouseleave = endHold;
+      fileCard.ontouchstart = startHold;
+      fileCard.ontouchend = endHold;
+      fileCard.ontouchcancel = endHold;
+    } else {
+      fileCard.onmousedown = null;
+      fileCard.onmouseup = null;
+      fileCard.ontouchstart = null;
+      fileCard.ontouchend = null;
+      fileCard.onclick = () => {
+        playSfx('flip');
+        fileCard.classList.toggle('flipped');
+      };
+    }
   }
 
-  el('nextPlayerBtn').addEventListener('click', () => {
+  nextPlayerBtn.addEventListener('click', () => {
+    playSfx('click');
+    fileCard.classList.remove('flipped', 'holding');
     currentIndex += 1;
     goToPass();
   });
 
-  function goToEnd(){
-    el('recapWord').textContent = `hidden until reveal`;
-    el('recapImp').textContent = `hidden until reveal`;
+  // ---- Discussion & Suspects Board Screen ----
+  function goToDiscussion(){
+    const t = THEMES[selectedTheme];
+    recapTheme.textContent = t ? t.name : 'Tous les thèmes (Mix Global)';
+    el('recapWord').textContent = '— (masqué)';
+    el('recapImp').textContent = '— (masqué)';
+    victoryBanner.classList.add('hidden');
+
+    speakerName.textContent = players[firstSpeakerIndex].name;
+
+    // Timer setup
+    if (timerDuration > 0) {
+      timerBox.classList.remove('hidden');
+      timerRemaining = timerDuration;
+      updateTimerDisplay();
+      stopTimer();
+    } else {
+      timerBox.classList.add('hidden');
+    }
+
+    renderSuspectsBoard();
+    updateLiveCounts();
+    topPeekBtn.classList.remove('hidden');
     showScreen(screenEnd);
   }
 
-  el('revealAllBtn').addEventListener('click', () => {
-    el('recapWord').textContent = `${secretWord[1]} (${secretWord[0]})`;
+  function renderSuspectsBoard(){
+    suspectsGrid.innerHTML = '';
+    players.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'suspect-card' + (p.isEliminated ? ' eliminated' : '');
+      
+      const avatar = document.createElement('div');
+      avatar.className = 'suspect-avatar';
+      avatar.textContent = p.avatar;
 
-    const whiteAgents = roles.map((r, i) => r === 'white' ? `Agent ${i+1}` : null).filter(Boolean);
-    const undercoverAgents = roles.map((r, i) => r === 'undercover' ? `Agent ${i+1}` : null).filter(Boolean);
+      const no = document.createElement('div');
+      no.className = 'suspect-no';
+      no.textContent = `Agent ${p.number}`;
+
+      const name = document.createElement('div');
+      name.className = 'suspect-name';
+      name.textContent = p.name;
+
+      const status = document.createElement('div');
+      status.className = 'suspect-status';
+      status.textContent = p.isEliminated ? 'ÉLIMINÉ' : 'EN MISSION';
+
+      card.appendChild(avatar);
+      card.appendChild(no);
+      card.appendChild(name);
+      card.appendChild(status);
+
+      if (p.isEliminated) {
+        const roleReveal = document.createElement('div');
+        roleReveal.className = 'role-reveal-badge';
+        if (p.role === 'white') roleReveal.textContent = 'MR. WHITE';
+        else if (p.role === 'undercover') roleReveal.textContent = 'UNDERCOVER';
+        else roleReveal.textContent = 'CIVIL';
+        card.appendChild(roleReveal);
+      } else {
+        card.addEventListener('click', () => {
+          if (isGameOver) return;
+          playSfx('click');
+          openInterrogation(p.index);
+        });
+      }
+
+      suspectsGrid.appendChild(card);
+    });
+  }
+
+  function updateLiveCounts(){
+    const livingCivils = players.filter(p => p.role === 'civil' && !p.isEliminated).length;
+    const livingImposters = players.filter(p => (p.role === 'white' || p.role === 'undercover') && !p.isEliminated).length;
+    countLivingCivils.textContent = livingCivils;
+    countLivingImposters.textContent = livingImposters;
+  }
+
+  function checkVictoryConditions(){
+    const livingCivils = players.filter(p => p.role === 'civil' && !p.isEliminated).length;
+    const livingImposters = players.filter(p => (p.role === 'white' || p.role === 'undercover') && !p.isEliminated).length;
+
+    if (livingImposters === 0) {
+      isGameOver = true;
+      victoryBanner.className = 'victory-banner';
+      victoryStamp.textContent = 'MISSION ACCOMPLIE';
+      victoryTitle.textContent = 'VICTOIRE DES CIVILS !';
+      victorySub.textContent = 'Tous les imposteurs ont été démasqués et neutralisés.';
+      victoryBanner.classList.remove('hidden');
+      playSfx('win');
+      revealAllRoles();
+    } else if (livingImposters >= livingCivils) {
+      isGameOver = true;
+      victoryBanner.className = 'victory-banner imposters';
+      victoryStamp.textContent = 'MISSION COMPROMISE';
+      victoryTitle.textContent = 'VICTOIRE DES IMPOSTEURS !';
+      victorySub.textContent = 'Les imposteurs sont parvenus à éliminer assez de civils pour prendre le contrôle.';
+      victoryBanner.classList.remove('hidden');
+      playSfx('alert');
+      revealAllRoles();
+    }
+  }
+
+  // ---- Timer Logic ----
+  function updateTimerDisplay(){
+    const mins = Math.floor(timerRemaining / 60);
+    const secs = timerRemaining % 60;
+    timerClock.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    timerClock.classList.toggle('urgent', timerRemaining <= 10 && timerRemaining > 0);
+  }
+
+  function startTimer(){
+    if (timerRunning) return;
+    timerRunning = true;
+    timerToggleBtn.textContent = 'Pause';
+    timerInterval = setInterval(() => {
+      if (timerRemaining > 0) {
+        timerRemaining--;
+        updateTimerDisplay();
+        if (timerRemaining <= 5 && timerRemaining > 0) playSfx('tick');
+        if (timerRemaining === 0) {
+          playSfx('alarm');
+          stopTimer();
+        }
+      } else {
+        stopTimer();
+      }
+    }, 1000);
+  }
+
+  function stopTimer(){
+    timerRunning = false;
+    timerToggleBtn.textContent = 'Démarrer';
+    if (timerInterval) clearInterval(timerInterval);
+  }
+
+  timerToggleBtn.addEventListener('click', () => {
+    playSfx('click');
+    if (timerRunning) stopTimer();
+    else startTimer();
+  });
+
+  timerResetBtn.addEventListener('click', () => {
+    playSfx('click');
+    stopTimer();
+    timerRemaining = timerDuration;
+    updateTimerDisplay();
+  });
+
+  // ---- String matching & normalization for Mr. White's Guess ----
+  function normalizeText(str) {
+    if (!str) return '';
+    return str
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[\(\)\[\]\{\}\/\\,\.\-\_\'\":;!?]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function normalizeArabic(str) {
+    if (!str) return '';
+    return str
+      .replace(/[\u064B-\u065F\u0670]/g, '')
+      .replace(/[إأآٱ]/g, 'ا')
+      .replace(/ة/g, 'ه')
+      .replace(/ى/g, 'ي')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function levenshteinDistance(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+    return matrix[b.length][a.length];
+  }
+
+  function isMrWhiteGuessCorrect(guess, secretWordPair) {
+    if (!guess || !secretWordPair) return false;
+    const cleanGuess = normalizeText(guess);
+    const cleanGuessAr = normalizeArabic(guess);
+    if (!cleanGuess && !cleanGuessAr) return false;
+
+    const [arWord, frWord] = secretWordPair;
+
+    // Check Arabic match
+    if (arWord && cleanGuessAr) {
+      const normAr = normalizeArabic(arWord);
+      if (normAr === cleanGuessAr) return true;
+      if (cleanGuessAr.length >= 2 && normAr.includes(cleanGuessAr)) return true;
+      if (normAr.length >= 2 && cleanGuessAr.includes(normAr)) return true;
+      const arTokens = normAr.split(' ').filter(t => t.length >= 2);
+      const guessArTokens = cleanGuessAr.split(' ').filter(t => t.length >= 2);
+      for (const gt of guessArTokens) {
+        if (arTokens.some(at => at.includes(gt) || gt.includes(at))) return true;
+      }
+    }
+
+    // Check French / Transliteration match
+    if (frWord && cleanGuess) {
+      const normFr = normalizeText(frWord);
+      if (normFr === cleanGuess) return true;
+
+      const mainPart = normalizeText(frWord.replace(/\(.*?\)/g, ''));
+      const parenParts = [...frWord.matchAll(/\((.*?)\)/g)].map(m => normalizeText(m[1]));
+
+      if (mainPart === cleanGuess) return true;
+      for (const p of parenParts) {
+        if (p === cleanGuess) return true;
+      }
+
+      const stopWords = new Set(["le", "la", "les", "un", "une", "des", "du", "de", "d", "l", "au", "aux", "a", "en", "et"]);
+      const frTokens = normFr.split(' ').filter(w => w.length >= 2 && !stopWords.has(w));
+      const guessTokens = cleanGuess.split(' ').filter(w => w.length >= 2 && !stopWords.has(w));
+
+      if (guessTokens.length > 0) {
+        const allInFr = guessTokens.every(gt => frTokens.some(ft => ft === gt || ft.includes(gt) || gt.includes(ft)));
+        if (allInFr) return true;
+      }
+
+      for (const ft of frTokens) {
+        for (const gt of guessTokens) {
+          if (ft.length >= 4 && levenshteinDistance(ft, gt) <= 1) return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // ---- Interrogation / Suspect Screen ----
+  function openInterrogation(playerIdx){
+    activeSuspectIndex = playerIdx;
+    const p = players[activeSuspectIndex];
+    voteSuspectTitle.textContent = `${p.avatar} ${p.name}`;
+    voteCard.classList.remove('flipped');
+    whiteGuessBox.classList.add('hidden');
+    whiteGuessInput.value = '';
+    whiteGuessFeedback.classList.add('hidden');
+    whiteGuessFeedback.textContent = '';
+    whiteGuessManualWrap.classList.add('hidden');
+    const back = el('voteCardBack');
+    back.classList.remove('blank');
+    const existingBar = back.querySelector('.redact-bar');
+    if (existingBar) existingBar.remove();
+
+    if (p.role === 'white') {
+      back.classList.add('blank');
+      voteCardWord.textContent = 'MR. WHITE';
+      voteCardWord.classList.remove('ar');
+      voteCardSub.textContent = "Il n'avait aucun mot.";
+      const bar = document.createElement('div');
+      bar.className = 'redact-bar';
+      back.appendChild(bar);
+    } else if (p.role === 'undercover') {
+      voteCardWord.classList.remove('ar');
+      voteCardWord.textContent = 'UNDERCOVER';
+      voteCardSub.textContent = impostorWord ? `Son mot était : ${impostorWord[1]} (${impostorWord[0]})` : '';
+    } else {
+      voteCardWord.classList.remove('ar');
+      voteCardWord.textContent = 'CIVIL INNOCENT';
+      voteCardSub.textContent = "Ce joueur n'était pas un imposteur.";
+    }
+
+    voteCard.onclick = () => {
+      playSfx('stamp');
+      voteCard.classList.add('flipped');
+      if (p.role === 'white') {
+        whiteGuessBox.classList.remove('hidden');
+        setTimeout(() => whiteGuessInput.focus(), 350);
+      }
+    };
+
+    showScreen(screenVote);
+  }
+
+  function handleMrWhiteGuess(){
+    const guess = whiteGuessInput.value.trim();
+    if (!guess) {
+      whiteGuessInput.focus();
+      return;
+    }
+
+    const isCorrect = isMrWhiteGuessCorrect(guess, secretWord);
+    whiteGuessFeedback.classList.remove('hidden');
+
+    if (isCorrect) {
+      playSfx('win');
+      whiteGuessFeedback.style.background = 'rgba(185,151,74,0.2)';
+      whiteGuessFeedback.style.border = '1px solid var(--gold)';
+      whiteGuessFeedback.style.color = 'var(--gold)';
+      whiteGuessFeedback.innerHTML = `🎉 <b>EXACT !</b> Le mot secret était bien <b>"${secretWord[1]}"</b> (${secretWord[0]}).<br>Mr. White a deviné juste et <b>remporte la partie !</b>`;
+      whiteGuessManualWrap.classList.add('hidden');
+
+      setTimeout(() => {
+        isGameOver = true;
+        victoryBanner.className = 'victory-banner imposters';
+        victoryStamp.textContent = 'HOLD-UP MR. WHITE';
+        victoryTitle.textContent = 'MR. WHITE REMPORTE LA PARTIE !';
+        victorySub.textContent = `Mr. White a déduit le mot secret "${secretWord[1]}" (${secretWord[0]}) et vole la victoire aux civils.`;
+        victoryBanner.classList.remove('hidden');
+        players[activeSuspectIndex].isEliminated = true;
+        renderSuspectsBoard();
+        updateLiveCounts();
+        revealAllRoles();
+        showScreen(screenEnd);
+      }, 1600);
+    } else {
+      playSfx('alert');
+      whiteGuessFeedback.style.background = 'rgba(165,35,24,0.2)';
+      whiteGuessFeedback.style.border = '1px solid var(--redact)';
+      whiteGuessFeedback.style.color = 'var(--paper)';
+      whiteGuessFeedback.innerHTML = `❌ <b>INCORRECT !</b> "${guess}" n'est pas le mot secret.<br>Mr. White a échoué sa déduction.`;
+      whiteGuessManualWrap.classList.remove('hidden');
+    }
+  }
+
+  whiteGuessSubmit.addEventListener('click', handleMrWhiteGuess);
+  whiteGuessInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleMrWhiteGuess();
+    }
+  });
+
+  confirmEliminateBtn.addEventListener('click', () => {
+    playSfx('stamp');
+    players[activeSuspectIndex].isEliminated = true;
+    renderSuspectsBoard();
+    updateLiveCounts();
+    checkVictoryConditions();
+    showScreen(screenEnd);
+  });
+
+  el('backToEndBtn').addEventListener('click', () => {
+    playSfx('click');
+    showScreen(screenEnd);
+  });
+
+  whiteGuessYes.addEventListener('click', () => {
+    playSfx('win');
+    whiteGuessFeedback.classList.remove('hidden');
+    whiteGuessFeedback.style.background = 'rgba(185,151,74,0.2)';
+    whiteGuessFeedback.style.border = '1px solid var(--gold)';
+    whiteGuessFeedback.style.color = 'var(--gold)';
+    whiteGuessFeedback.innerHTML = `🎉 <b>VICTOIRE VALIDÉE !</b> Le groupe valide la déduction de Mr. White ("${secretWord[1]}").`;
+    setTimeout(() => {
+      isGameOver = true;
+      victoryBanner.className = 'victory-banner imposters';
+      victoryStamp.textContent = 'HOLD-UP MR. WHITE';
+      victoryTitle.textContent = 'MR. WHITE REMPORTE LA PARTIE !';
+      victorySub.textContent = `Mr. White a déduit le mot secret "${secretWord[1]}" et s'empare de la victoire.`;
+      victoryBanner.classList.remove('hidden');
+      players[activeSuspectIndex].isEliminated = true;
+      renderSuspectsBoard();
+      updateLiveCounts();
+      revealAllRoles();
+      showScreen(screenEnd);
+    }, 1200);
+  });
+
+  whiteGuessNo.addEventListener('click', () => {
+    playSfx('alert');
+    players[activeSuspectIndex].isEliminated = true;
+    renderSuspectsBoard();
+    updateLiveCounts();
+    checkVictoryConditions();
+    showScreen(screenEnd);
+  });
+
+  // ---- End Game & Reveal All Roles ----
+  function revealAllRoles(){
+    el('recapWord').textContent = `${secretWord[1]} (${secretWord[0]})`;
+    const whiteAgents = players.filter(p => p.role === 'white').map(p => p.name);
+    const undercoverAgents = players.filter(p => p.role === 'undercover').map(p => p.name);
     const allImpostors = [...whiteAgents, ...undercoverAgents];
-    el('recapImp').textContent = allImpostors.join(', ') || '—';
+    el('recapImp').textContent = allImpostors.join(', ') || 'Aucun';
 
     const roster = el('recapImp').closest('.roster');
     let whiteRow = el('recapWhiteRow');
@@ -955,95 +2497,126 @@
         pairRow.remove();
       }
     }
+
+    // Reveal roles on suspect cards
+    players.forEach(p => p.isEliminated = true);
+    renderSuspectsBoard();
+  }
+
+  el('revealAllBtn').addEventListener('click', () => {
+    playSfx('stamp');
+    revealAllRoles();
   });
 
   el('replayBtn').addEventListener('click', () => {
+    playSfx('click');
+    stopTimer();
+    topPeekBtn.classList.add('hidden');
     secretWord = null;
     impostorWord = null;
-    roles = [];
+    players = [];
     currentIndex = 0;
+    isGameOver = false;
     showScreen(screenSetup);
   });
 
-  // ---- Vote-check screen ----
-  let voteAgentIndex = 0; // 0-based
+  // ---- Peek Word (Mot Oublié — Consultation Discrète) ----
+  function openPeekModal(){
+    initAudio();
+    playSfx('click');
+    peekPlayerSelect.innerHTML = '';
+    players.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.index;
+      opt.textContent = `${p.avatar} ${p.name}`;
+      peekPlayerSelect.appendChild(opt);
+    });
 
-  el('checkVoteBtn').addEventListener('click', () => {
-    voteAgentIndex = 0;
-    refreshVoteAgentUI();
-    resetVoteCard();
-    showScreen(screenVote);
-  });
-
-  el('backToEndBtn').addEventListener('click', () => {
-    showScreen(screenEnd);
-  });
-
-  function refreshVoteAgentUI(){
-    el('voteAgentCount').textContent = voteAgentIndex + 1;
-    el('voteAgentVal').textContent = `Agent ${voteAgentIndex + 1}`;
+    peekCard.classList.remove('flipped', 'holding');
+    updatePeekCard(parseInt(peekPlayerSelect.value, 10) || 0);
+    peekModal.classList.remove('hidden');
   }
 
-  el('voteAgentMinus').addEventListener('click', () => {
-    voteAgentIndex = clamp(voteAgentIndex - 1, 0, numPlayers - 1);
-    refreshVoteAgentUI();
-    resetVoteCard();
-  });
-  el('voteAgentPlus').addEventListener('click', () => {
-    voteAgentIndex = clamp(voteAgentIndex + 1, 0, numPlayers - 1);
-    refreshVoteAgentUI();
-    resetVoteCard();
-  });
+  function updatePeekCard(playerIdx){
+    const p = players[playerIdx];
+    if (!p) return;
 
-  function resetVoteCard(){
-    const card = el('voteCard');
-    card.classList.remove('flipped');
-    el('whiteGuessBox').classList.add('hidden');
-    el('whiteGuessResult').textContent = '';
-    setupVoteCard();
-  }
-
-  function setupVoteCard(){
-    const card = el('voteCard');
-    const back = el('voteCardBack');
-    const wordEl = el('voteCardWord');
-    const subEl = el('voteCardSub');
-    back.classList.remove('blank');
-    const existingBar = back.querySelector('.redact-bar');
+    peekCard.classList.remove('flipped', 'holding');
+    peekCardBack.classList.remove('blank');
+    const existingBar = peekCardBack.querySelector('.redact-bar');
     if (existingBar) existingBar.remove();
 
-    const role = roles[voteAgentIndex];
-    if (role === 'white') {
-      back.classList.add('blank');
-      wordEl.textContent = 'MR. WHITE';
-      wordEl.classList.remove('ar');
-      subEl.textContent = 'Il n\u2019avait aucun mot.';
+    const isHoldMode = optHoldPeek.checked;
+    peekHoldHint.classList.toggle('hidden', !isHoldMode);
+    peekTapHint.textContent = isHoldMode ? "Maintenez le doigt appuyé pour voir" : "Touchez la carte pour révéler";
+    peekCardLabel.textContent = "VOTRE MOT SECRET";
+
+    if (p.role === 'white') {
+      peekCardBack.classList.add('blank');
+      peekCardWord.textContent = 'AUCUN MOT';
+      peekCardWord.classList.remove('ar');
+      peekCardTranslit.textContent = "Vous n'avez aucun mot secret.";
       const bar = document.createElement('div');
       bar.className = 'redact-bar';
-      back.appendChild(bar);
-    } else if (role === 'undercover') {
-      wordEl.classList.remove('ar');
-      wordEl.textContent = 'UNDERCOVER';
-      subEl.textContent = impostorWord ? `Son mot était : ${impostorWord[1]} (${impostorWord[0]})` : '';
+      peekCardBack.appendChild(bar);
+    } else if (p.role === 'undercover') {
+      peekCardWord.classList.add('ar');
+      peekCardWord.textContent = impostorWord[0];
+      peekCardTranslit.textContent = impostorWord[1];
     } else {
-      wordEl.classList.remove('ar');
-      wordEl.textContent = 'CIVIL';
-      subEl.textContent = 'Ce n\u2019était pas un imposteur.';
+      peekCardWord.classList.add('ar');
+      peekCardWord.textContent = secretWord[0];
+      peekCardTranslit.textContent = secretWord[1];
     }
 
-    card.onclick = () => {
-      card.classList.add('flipped');
-      if (role === 'white') {
-        el('whiteGuessBox').classList.remove('hidden');
-      }
-    };
+    if (isHoldMode) {
+      peekCard.onclick = null;
+      const startHold = (e) => {
+        e.preventDefault();
+        playSfx('flip');
+        peekCard.classList.add('holding');
+      };
+      const endHold = (e) => {
+        e.preventDefault();
+        peekCard.classList.remove('holding');
+      };
+      peekCard.onmousedown = startHold;
+      peekCard.onmouseup = endHold;
+      peekCard.onmouseleave = endHold;
+      peekCard.ontouchstart = startHold;
+      peekCard.ontouchend = endHold;
+      peekCard.ontouchcancel = endHold;
+    } else {
+      peekCard.onmousedown = null;
+      peekCard.onmouseup = null;
+      peekCard.ontouchstart = null;
+      peekCard.ontouchend = null;
+      peekCard.onclick = () => {
+        playSfx('flip');
+        peekCard.classList.toggle('flipped');
+      };
+    }
   }
 
-  el('whiteGuessYes').addEventListener('click', () => {
-    el('whiteGuessResult').textContent = `Mr. White a deviné "${secretWord[1]}" — il l'emporte malgré son démasquage !`;
+  peekPlayerSelect.addEventListener('change', () => {
+    playSfx('click');
+    updatePeekCard(parseInt(peekPlayerSelect.value, 10));
   });
-  el('whiteGuessNo').addEventListener('click', () => {
-    el('whiteGuessResult').textContent = `Mauvaise réponse — le groupe l'emporte sur ce joueur.`;
+
+  topPeekBtn.addEventListener('click', openPeekModal);
+  peekWordBtn.addEventListener('click', openPeekModal);
+
+  closePeekBtn.addEventListener('click', () => {
+    playSfx('click');
+    peekCard.classList.remove('flipped', 'holding');
+    peekModal.classList.add('hidden');
+  });
+
+  peekModal.addEventListener('click', (e) => {
+    if (e.target === peekModal) {
+      peekCard.classList.remove('flipped', 'holding');
+      peekModal.classList.add('hidden');
+    }
   });
 
 })();
